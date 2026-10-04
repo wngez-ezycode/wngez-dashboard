@@ -30,6 +30,7 @@ Homestead.json
 .vscode
 /qodana.yaml
 /public/firebase-messaging-sw.js
+/storage/app/firebase_service.json
 /app/Swagger/*.php
 composer.lock
 

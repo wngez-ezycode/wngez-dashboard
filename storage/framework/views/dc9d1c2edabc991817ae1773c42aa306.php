@@ -1,4 +1,3 @@
-
 <header>
     <nav class="navbar navbar-expand navbar-light dashboard-topbar">
         <div class="container-fluid">
@@ -15,9 +14,13 @@
 
                 <?php if(config('app.demo_mode')): ?>
                     <div class="col-2">
-                        <span class="badge alert-info primary-background-color"><?php echo e(__("Demo Mode")); ?></span>
+                        <span class="badge alert-info primary-background-color"><?php echo e(__('Demo Mode')); ?></span>
                     </div>
                 <?php endif; ?>
+            </div>
+            <div class="wngez-global-search d-none d-xl-flex">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="search" placeholder="<?php echo e(__('Search here...')); ?>" aria-label="<?php echo e(__('Search')); ?>">
             </div>
 
 
@@ -37,12 +40,12 @@
                             </button>
                         </a>
                         
-                        
+
                         <ul class="dropdown-menu dropdown-menu-end">
 
                             <?php $__currentLoopData = $languages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                                <li class="d-flex justify-content-between align-items-center px-2 py-1" data-language-code="<?php echo e($language->code); ?>">
+                                <li class="d-flex justify-content-between align-items-center px-2 py-1"
+                                    data-language-code="<?php echo e($language->code); ?>">
 
                                     <a class="dropdown-item d-flex align-items-center flex-grow-1"
                                         href="<?php echo e(route('language.set-current', $language->code)); ?>">
@@ -70,10 +73,89 @@
                         </ul>
                     </div>
 
-                    <a href="<?php echo e(url('notification')); ?>" class="topbar-notification" aria-label="<?php echo e(__('Notification')); ?>">
-                        <i class="ph ph-bell"></i>
-                        <span></span>
-                    </a>
+                    <?php
+                        $recentNotifications = \App\Models\Notifications::latest()->take(5)->get();
+                        $notificationsCount = \App\Models\Notifications::count();
+                    ?>
+
+                    <div class="dropdown notification-dropdown-wrapper">
+                        <a href="#" class="topbar-notification" id="notificationDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false" aria-label="<?php echo e(__('Notification')); ?>">
+                            <i class="ph ph-bell"></i>
+                            <?php if($notificationsCount > 0): ?>
+                                <span class="notification-indicator"></span>
+                            <?php endif; ?>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu shadow-lg p-0"
+                            aria-labelledby="notificationDropdown">
+                            <div
+                                class="notification-dropdown-header d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="ph ph-bell text-primary fs-5"></i>
+                                    <h6 class="mb-0 fw-bold fs-6"><?php echo e(__('Notifications')); ?></h6>
+                                </div>
+                                <?php if($notificationsCount > 0): ?>
+                                    <span class="badge bg-primary rounded-pill px-2 py-1"
+                                        style="font-size: 11px;"><?php echo e($notificationsCount); ?></span>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="notification-dropdown-body">
+                                <?php $__empty_1 = true; $__currentLoopData = $recentNotifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                    <a href="<?php echo e(url('notification')); ?>"
+                                        class="notification-dropdown-item d-flex align-items-start px-3 py-2 text-decoration-none border-bottom">
+                                        <div class="notification-item-icon me-3 flex-shrink-0">
+                                            <?php if(!empty($notification->getRawOriginal('image'))): ?>
+                                                <img src="<?php echo e($notification->image); ?>" alt=""
+                                                    class="rounded-circle"
+                                                    style="width: 36px; height: 36px; object-fit: cover;">
+                                            <?php else: ?>
+                                                <div
+                                                    class="notification-icon-placeholder rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="ph ph-bell-simple"></i>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="notification-item-content flex-grow-1 min-w-0">
+                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <h6 class="notification-item-title mb-0 text-truncate fw-semibold">
+                                                    <?php echo e($notification->title); ?></h6>
+                                                <span class="notification-item-time text-muted flex-shrink-0 ms-2">
+                                                    <?php echo e($notification->created_at ? $notification->created_at->diffForHumans() : ''); ?>
+
+                                                </span>
+                                            </div>
+                                            <p class="notification-item-desc mb-0 text-muted">
+                                                <?php echo e($notification->message); ?>
+
+                                            </p>
+                                        </div>
+                                    </a>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                    <div class="notification-empty-state text-center py-4 px-3">
+                                        <div class="notification-empty-icon mb-2">
+                                            <i class="ph ph-bell-slash"></i>
+                                        </div>
+                                        <p class="mb-1 fw-semibold text-secondary" style="font-size: 13.5px;">
+                                            <?php echo e(__('No notifications found')); ?></p>
+                                        <small class="text-muted"
+                                            style="font-size: 11.5px;"><?php echo e(__('You are all caught up!')); ?></small>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="notification-dropdown-footer p-2 text-center border-top">
+                                <a href="<?php echo e(url('notification')); ?>"
+                                    class="notification-more-btn btn btn-sm w-100 fw-bold">
+                                    <?php echo e(__('More')); ?>
+
+                                    <i
+                                        class="ph <?php echo e(Session::get('is_rtl', false) || app()->getLocale() == 'ar' ? 'ph-caret-left' : 'ph-caret-right'); ?> ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                     <span class="topbar-divider"></span>
 
@@ -84,10 +166,9 @@
 
                             <div class="avatar avatar-md2 flex-shrink-0">
                                 <?php if(!empty(Auth::user()->getRawOriginal('profile'))): ?>
-                                    <img
-                                        src="<?php echo e(Auth::user()->profile); ?>"
-                                        alt="Profile"
-                                        class="img-fluid rounded-circle" data-no-auto-error onerror="onErrorUserAvatar(event)" data-name="<?php echo e(Auth::user()->name); ?>">
+                                    <img src="<?php echo e(Auth::user()->profile); ?>" alt="Profile"
+                                        class="img-fluid rounded-circle" data-no-auto-error
+                                        onerror="onErrorUserAvatar(event)" data-name="<?php echo e(Auth::user()->name); ?>">
                                 <?php elseif(!empty(Auth::user()->name)): ?>
                                     <?php if (isset($component)) { $__componentOriginalbaf85fa9f435cae78878642caae8517e = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalbaf85fa9f435cae78878642caae8517e = $attributes; } ?>

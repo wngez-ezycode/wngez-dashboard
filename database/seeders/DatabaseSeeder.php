@@ -16,7 +16,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             InstallationSeeder::class,
-            SystemUpgradeSeeder::class
+            SystemUpgradeSeeder::class,
+            ArabicLanguageSeeder::class,
+            CategoryDataSeeder::class,
+            SliderDataSeeder::class,
         ]);
     }
 }

@@ -86,7 +86,9 @@ class SettingController extends Controller
             // Get raw file path (bypass Setting model accessor that converts to full URL)
             $rawServiceFile = Setting::where('name', 'service_file')->value('value');
             $notificationSettings = [
-                'fcm_service_file_exists' => !empty($rawServiceFile) && FileService::fileExists($rawServiceFile) ? 1 : 0,
+                'fcm_service_file_exists' => !empty($rawServiceFile) &&
+                    (($rawServiceFile === 'firebase_service.json' && File::exists(storage_path('app/firebase_service.json'))) ||
+                    FileService::fileExists($rawServiceFile)) ? 1 : 0,
             ];
         }
 
@@ -395,7 +397,7 @@ class SettingController extends Controller
             'messagingSenderId' => 'required',
             'appId' => 'required',
             'measurementId' => 'nullable|string',
-            'vapidKey' => 'required|string',
+            'vapidKey' => 'nullable|string',
         ]);
         if ($validator->fails()) {
             ResponseService::validationError($validator->errors()->first());

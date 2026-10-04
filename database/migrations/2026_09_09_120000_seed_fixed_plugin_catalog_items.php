@@ -3,7 +3,7 @@
 use App\Models\PluginCatalogItem;
 use Illuminate\Database\Migrations\Migration;
 
-// eClassify plugins ship as their own product line (Cashfree + PayU India
+// Product-specific plugins ship as their own product line (Cashfree + PayU India
 // payment gateways) instead of a pulled-from-validator marketplace catalog.
 // Seed the two fixed entries and lock the "Available Plugin" tab to them.
 return new class extends Migration {

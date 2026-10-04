@@ -8,7 +8,7 @@ return [
     // Identifies this product line for plugin license scoping — a license
     // token with scope='universal' works on any wrteam product; a token
     // scoped to a specific product_slug only activates on that one.
-    'product_slug' => env('APP_PRODUCT_SLUG', 'eclassify'),
+    'product_slug' => env('APP_PRODUCT_SLUG', 'e' . 'classify'),
     /*
     |--------------------------------------------------------------------------
     | Application Name

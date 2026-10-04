@@ -70,13 +70,13 @@
                                 <div class="col-sm-4">
                                     <input name="measurementId" type="text" class="form-control" id="measurementId" placeholder="{{__("Measurement Id")}}" value="{{ $settings['measurementId'] ?? '' }}">
                                 </div>
-                                <label for="vapidKey" class="col-sm-2 col-form-label text-center">{{__("VAPID Key")}} <span class="text-danger">*</span></label>
+                                <label for="vapidKey" class="col-sm-2 col-form-label text-center">{{__("VAPID Key")}}</label>
                                 <div class="col-sm-4 position-relative has-icon-right">
-                                    <input name="vapidKey" type="password" class="form-control" id="vapidKey" placeholder="{{__("VAPID Public Key")}}" value="{{ $settings['vapidKey'] ?? '' }}" required="">
+                                    <input name="vapidKey" type="password" class="form-control" id="vapidKey" placeholder="{{__("VAPID Public Key")}}" value="{{ $settings['vapidKey'] ?? '' }}">
                                     <div class="form-control-icon lh-1 top-0 mt-2">
                                         <i class="bi bi-eye toggle-password"></i>
                                     </div>
-                                    <small class="form-text text-muted">{{__("Get from Firebase Console → Project Settings → Cloud Messaging → Web Push certificates")}}</small>
+                                    <small class="form-text text-muted">{{__("Optional for Web Push. Get from Firebase Console → Project Settings → Cloud Messaging → Web Push certificates")}}</small>
                                 </div>
                             </div>
                         </div>

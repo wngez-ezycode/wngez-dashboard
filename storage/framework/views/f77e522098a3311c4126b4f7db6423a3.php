@@ -23,18 +23,21 @@
                         <span class="menu-item"><?php echo e(__('Dashboard')); ?></span>
                     </a>
                 </li>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete','category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
-                    'custom-field-create', 'custom-field-update', 'custom-field-delete','feature-section-list', 'feature-section-create', 'feature-section-update',
-                    'feature-section-delete','slider-list', 'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list', 'home-screen-section-update',
-                    'tip-list', 'tip-create', 'tip-update', 'tip-delete',
-                    'banner-ad-list', 'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete',
+                    'category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
+                    'custom-field-create', 'custom-field-update', 'custom-field-delete', 'feature-section-list',
+                    'feature-section-create', 'feature-section-update', 'feature-section-delete', 'slider-list',
+                    'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list',
+                    'home-screen-section-update', 'tip-list', 'tip-create', 'tip-update', 'tip-delete', 'banner-ad-list',
+                    'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])): ?>
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-cards"></i>
                             <span class="menu-item"><?php echo e(__('Ads Listing')); ?></span>
                         </a>
                         <ul class="submenu" style="padding-inline-start: 0rem">
-                           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete'])): ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['advertisement-list', 'advertisement-create', 'advertisement-update',
+                                'advertisement-delete'])): ?>
                                 <li class="submenu-item">
                                     <a href="<?php echo e(route('advertisement.index')); ?>"><?php echo e(__('All Ads')); ?></a>
                                 </li>
@@ -44,7 +47,8 @@
                                     <a href="<?php echo e(route('category.index')); ?>"><?php echo e(__('Categories')); ?></a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['custom-field-list', 'custom-field-create', 'custom-field-update', 'custom-field-delete'])): ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['custom-field-list', 'custom-field-create', 'custom-field-update',
+                                'custom-field-delete'])): ?>
                                 <li class="submenu-item">
                                     <a href="<?php echo e(route('custom-fields.index')); ?>"><?php echo e(__('Custom Fields')); ?></a>
                                 </li>
@@ -54,11 +58,13 @@
                 <?php endif; ?>
 
 
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete','category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
-                    'custom-field-create', 'custom-field-update', 'custom-field-delete','feature-section-list', 'feature-section-create', 'feature-section-update',
-                    'feature-section-delete','slider-list', 'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list', 'home-screen-section-update',
-                    'tip-list', 'tip-create', 'tip-update', 'tip-delete',
-                    'banner-ad-list', 'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete',
+                    'category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
+                    'custom-field-create', 'custom-field-update', 'custom-field-delete', 'feature-section-list',
+                    'feature-section-create', 'feature-section-update', 'feature-section-delete', 'slider-list',
+                    'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list',
+                    'home-screen-section-update', 'tip-list', 'tip-create', 'tip-update', 'tip-delete', 'banner-ad-list',
+                    'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])): ?>
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-layout"></i>
@@ -95,7 +101,8 @@
                     </li>
                 <?php endif; ?>
 
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['admin-chat-manage', 'chat-template-list', 'chat-template-create', 'chat-template-update', 'chat-template-delete'])): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['admin-chat-manage', 'chat-template-list', 'chat-template-create', 'chat-template-update',
+                    'chat-template-delete'])): ?>
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-chats-circle"></i>
@@ -107,7 +114,8 @@
                                     <a href="<?php echo e(route('admin-chat.index')); ?>"><?php echo e(__('Chats')); ?></a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['chat-template-list', 'chat-template-create', 'chat-template-update', 'chat-template-delete'])): ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['chat-template-list', 'chat-template-create', 'chat-template-update',
+                                'chat-template-delete'])): ?>
                                 <li class="submenu-item">
                                     <a href="<?php echo e(route('chat-templates.index')); ?>"><?php echo e(__('Chat Templates')); ?></a>
                                 </li>
@@ -125,7 +133,7 @@
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-credit-card"></i>
                             <span class="menu-item"><?php echo e(__('Package Management')); ?></span>
-                        </a>    
+                        </a>
                         <ul class="submenu" style="padding-inline-start: 0rem">
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['advertisement-listing-package-list', 'advertisement-listing-package-create',
                                 'advertisement-listing-package-update', 'advertisement-listing-package-delete',
@@ -142,7 +150,8 @@
                             <?php endif; ?>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('payment-transactions-list')): ?>
                                 <li class="submenu-item">
-                                    <a href="<?php echo e(route('package.payment-transactions.index')); ?>"><?php echo e(__('Payment Transactions')); ?></a>
+                                    <a
+                                        href="<?php echo e(route('package.payment-transactions.index')); ?>"><?php echo e(__('Payment Transactions')); ?></a>
                                 </li>
                             <?php endif; ?>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('payment-transactions-list')): ?>
@@ -168,7 +177,8 @@
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['seller-verification-field-list', 'seller-verification-field-create',
                                 'seller-verification-field-update', 'seller-verification-field-delete'])): ?>
                                 <li class="submenu-item">
-                                    <a href="<?php echo e(route('seller-verification.verification-field')); ?>"><?php echo e(__('Verification Fields')); ?></a>
+                                    <a
+                                        href="<?php echo e(route('seller-verification.verification-field')); ?>"><?php echo e(__('Verification Fields')); ?></a>
                                 </li>
                             <?php endif; ?>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['seller-verification-request-list', 'seller-verification-request-create',
@@ -190,8 +200,8 @@
                         </ul>
                     </li>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['blog-list', 'blog-create', 'blog-update', 'blog-delete',
-                    'faq-create', 'faq-list', 'faq-update',  'faq-delete'])): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['blog-list', 'blog-create', 'blog-update', 'blog-delete', 'faq-create', 'faq-list',
+                    'faq-update', 'faq-delete'])): ?>
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-article"></i>
@@ -218,8 +228,8 @@
 
 
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['role-list', 'role-create', 'role-update', 'role-delete', 'staff-list', 'staff-create',
-                    'staff-update', 'staff-delete', 'customer-list', 'customer-create', 'customer-update', 'customer-delete',
-                    'user-queries-list'])): ?>
+                    'staff-update', 'staff-delete', 'customer-list', 'customer-create', 'customer-update',
+                    'customer-delete', 'user-queries-list'])): ?>
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-users-three"></i>
@@ -251,7 +261,8 @@
                 <?php endif; ?>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['currency-list', 'currency-create', 'currency-update', 'currency-delete', 'country-list',
                     'country-create', 'country-update', 'country-delete', 'state-list', 'state-create', 'state-update',
-                    'state-delete', 'city-list', 'city-create', 'city-update', 'city-delete','area-create', 'area-list', 'area-update', 'area-delete'])): ?>
+                    'state-delete', 'city-list', 'city-create', 'city-update', 'city-delete', 'area-create', 'area-list',
+                    'area-update', 'area-delete'])): ?>
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-globe-hemisphere-east"></i>
@@ -286,14 +297,16 @@
                         </ul>
                     </li>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['report-reason-list', 'report-reason-create', 'report-reason-update', 'report-reason-delete', 'user-reports-list'])): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['report-reason-list', 'report-reason-create', 'report-reason-update', 'report-reason-delete',
+                    'user-reports-list'])): ?>
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-flag"></i>
                             <span class="menu-item"><?php echo e(__('Reports')); ?></span>
                         </a>
                         <ul class="submenu" style="padding-inline-start: 0rem">
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['report-reason-list', 'report-reason-create', 'report-reason-update', 'report-reason-delete'])): ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['report-reason-list', 'report-reason-create', 'report-reason-update',
+                                'report-reason-delete'])): ?>
                                 <li class="submenu-item">
                                     <a href="<?php echo e(route('report-reasons.index')); ?>"><?php echo e(__('Report Reasons')); ?></a>
                                 </li>
@@ -316,18 +329,9 @@
                 <?php endif; ?>
 
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('settings-update')): ?>
-                <div class="sidebar-new-title"><?php echo e(__('Settings')); ?></div>
+                    <div class="sidebar-new-title"><?php echo e(__('Settings')); ?></div>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('settings-update')): ?>
-                    <?php if(\Illuminate\Support\Facades\Auth::user()->hasRole('Super Admin')): ?>
-                        <li class="sidebar-item">
-                            <a href="<?php echo e(route('plugin-manager.index')); ?>" class='sidebar-link'>
-                                <i class="ph ph-puzzle-piece"></i>
-                                <span class="menu-item"><?php echo e(__('Plugin Manager')); ?></span>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                <?php endif; ?>
+                
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('settings-update')): ?>
                     <li class="sidebar-item">
                         <a href="<?php echo e(route('settings.index')); ?>" class='sidebar-link'>
@@ -336,16 +340,7 @@
                         </a>
                     </li>
                 <?php endif; ?>
-               <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('settings-update')): ?>
-                    <?php if(\Illuminate\Support\Facades\Auth::user()->hasRole('Super Admin')): ?>
-                        <li class="sidebar-item">
-                            <a href="<?php echo e(route('system-update.index')); ?>" class='sidebar-link'>
-                                <i class="ph ph-gear-fine"></i>
-                                <span class="menu-item"><?php echo e(__('System Update')); ?></span>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                <?php endif; ?>
+                
             </ul>
         </div>
     </div>

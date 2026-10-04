@@ -7,7 +7,6 @@
     <div class="page-title">
         <div class="row align-items-center">
             <div class="col-12 col-md-6">
-                <h4 class="mb-0"><?php echo $__env->yieldContent('title'); ?></h4>
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-end">
                 <?php if(!empty($category)): ?>
@@ -15,20 +14,6 @@
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category-create')): ?>
                         <a class="btn btn-primary me-2" href="<?php echo e(route('category.create', ['id' => $category->id])); ?>">+ <?php echo e(__("Add Subcategory")); ?> - /<?php echo e($category->name); ?> </a>
                     <?php endif; ?>
-                <?php else: ?>
-                    <div class="d-flex flex-wrap gap-2">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category-create')): ?>
-                            <a class="btn btn-primary" href="<?php echo e(route('category.create')); ?>">+ <?php echo e(__("Add Category")); ?> </a>
-                            <a href="<?php echo e(route('category.bulk-upload')); ?>" class="btn btn-success">
-                                <i class="fas fa-upload"></i> <span class="d-none d-sm-inline"><?php echo e(__("Bulk Upload")); ?></span><span class="d-sm-none"><?php echo e(__("Upload")); ?></span>
-                            </a>
-                        <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category-update')): ?>
-                            <a href="<?php echo e(route('category.bulk-update')); ?>" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> <span class="d-none d-sm-inline"><?php echo e(__("Bulk Update")); ?></span><span class="d-sm-none"><?php echo e(__("Update")); ?></span>
-                            </a>
-                        <?php endif; ?>
-                    </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -42,9 +27,22 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <div class="row">
-                            <div class="text-right col-md-12">
-                                <a href="<?php echo e(route('category.order')); ?>">+ <?php echo e(__("Set Order of Categories")); ?> </a>
+                        <div class="wngez-list-card-head">
+                            <div class="wngez-list-title">
+                                <span><i class="ph ph-sliders-horizontal"></i></span>
+                                <div>
+                                    <h2><?php echo e(__('Set Order of Categories')); ?></h2>
+                                    <p><?php echo e(__('Drag and drop to change the order of categories.')); ?></p>
+                                </div>
+                            </div>
+                            <div class="wngez-list-actions">
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category-create')): ?>
+                                    <a class="btn btn-primary" href="<?php echo e(route('category.create')); ?>"><i class="ph ph-plus"></i><?php echo e(__('Add Category')); ?></a>
+                                    <a href="<?php echo e(route('category.bulk-upload')); ?>" class="btn btn-success"><i class="ph ph-upload-simple"></i><?php echo e(__('Bulk Upload')); ?></a>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category-update')): ?>
+                                    <a href="<?php echo e(route('category.bulk-update')); ?>" class="btn btn-warning"><i class="ph ph-note-pencil"></i><?php echo e(__('Bulk Update')); ?></a>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <?php

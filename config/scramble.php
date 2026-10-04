@@ -29,7 +29,7 @@ return [
         /*
          * Description rendered on the home page of the API documentation (`/docs/api`).
          */
-        'description' => "> ⚠️ **Note:** This API documentation is currently **under development and experimental**. Endpoints, request/response schemas, and behavior may change without notice. Use with caution.\n\neClassify - Classified Buy & Sell Marketplace API",
+        'description' => "> ⚠️ **Note:** This API documentation is currently **under development and experimental**. Endpoints, request/response schemas, and behavior may change without notice. Use with caution.\n\nWngeZ - Classified Buy & Sell Marketplace API",
     ],
 
     /*

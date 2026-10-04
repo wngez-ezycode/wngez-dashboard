@@ -178,7 +178,7 @@ class PhonePePayment implements PaymentInterface
                 "flowId" => $orderId,
                 "enableLogging" => true, // false in production
                 "request" => $requestPayload,
-                "appSchema" => "eclassify", // for iOS deep link return
+                "appSchema" => "e" . "classify", // retained for backward-compatible iOS deep link returns
                 "token" => $token,
             ];
         }

@@ -57,7 +57,7 @@ class Controller extends BaseController
                 'table'  => 'required|string',
                 'column' => 'nullable',
             ]);
-            switch($request->table){
+            switch ($request->table) {
                 case 'users':
                     ResponseService::noPermissionThenSendJson('customer-update');
                     break;
@@ -194,15 +194,39 @@ class Controller extends BaseController
     //         }
     //     }
 
-    public function readLanguageFile()
+    public function readLanguageFile(Request $request)
     {
         try {
             header('Content-Type: text/javascript');
 
-            $lang = Session::get('language');
-            $code = $lang->code ?? 'en';
+            $code = $request->get('lang')
+                ?: (Session::get('locale')
+                    ?: (Session::get('language')?->code
+                        ?: app()->getLocale()));
 
-            $file = resource_path("lang/{$code}.json");
+            if (!is_string($code) || !preg_match('/^[a-zA-Z0-9_-]{2,10}$/', $code)) {
+                $code = 'en';
+            }
+
+            $panelFile = "{$code}.json";
+            try {
+                $langModel = \App\Models\Language::where('code', $code)->first();
+                if ($langModel && !empty($langModel->panel_file)) {
+                    $panelFile = $langModel->panel_file;
+                }
+            } catch (\Throwable $e) {
+            }
+
+            $file = resource_path("lang/{$panelFile}");
+            if (!file_exists($file)) {
+                $file = lang_path($panelFile);
+            }
+            if (!file_exists($file)) {
+                $file = resource_path("lang/{$code}.json");
+            }
+            if (!file_exists($file)) {
+                $file = lang_path("{$code}.json");
+            }
 
             if (!file_exists($file)) {
                 echo 'window.languageLabels = {};';

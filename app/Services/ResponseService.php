@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Middleware\NetworkAdaptiveImages;
 use Exception;
+use Fruitcake\Cors\CorsService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -188,6 +189,7 @@ class ResponseService
         ], $customData));
         self::applyNetworkPreset($response);
         self::addCacheHeaders($response);
+        self::addCorsHeaders($response);
         $response->send();
         exit();
     }
@@ -222,6 +224,7 @@ class ResponseService
         ]);
         self::applyNetworkPreset($response);
         self::addCacheHeaders($response);
+        self::addCorsHeaders($response);
         $response->send();
         exit();
     }
@@ -258,6 +261,7 @@ class ResponseService
         ]);
         self::applyNetworkPreset($response);
         self::addCacheHeaders($response);
+        self::addCorsHeaders($response);
         $response->send();
         exit();
     }
@@ -314,6 +318,65 @@ class ResponseService
         }
 
         self::applyImageUrlTransform($response, $preset);
+    }
+
+    /**
+     * Attach the CORS headers Laravel's `HandleCors` middleware would have
+     * added, to the responses this service sends itself.
+     *
+     * `successResponse()` / `errorResponse()` / `warningResponse()` call
+     * `$response->send()` and then `exit()`, so the request never travels back
+     * up the middleware stack and `HandleCors` never gets to decorate the
+     * response. Without these headers a browser refuses the response
+     * ("No 'Access-Control-Allow-Origin' header is present on the requested
+     * resource") and every API call from the Flutter web app fails with an XHR
+     * connection error. The values still come from `config/cors.php`, and the
+     * preflight (OPTIONS) request keeps being answered by `HandleCors` itself —
+     * so the header is only ever sent once, which browsers require.
+     */
+    private static function addCorsHeaders(JsonResponse $response): void
+    {
+        try {
+            if (! self::requestMatchesCorsPaths()) {
+                return;
+            }
+
+            $cors = app(CorsService::class);
+            $cors->setOptions(config('cors', []));
+            $cors->addActualRequestHeaders($response, request());
+        } catch (Throwable) {
+            // A broken CORS configuration must never take the API response down.
+        }
+    }
+
+    /**
+     * Mirror of `HandleCors::hasMatchingPath()` — the paths listed under
+     * `cors.paths` in config/cors.php (optionally keyed by host).
+     */
+    private static function requestMatchesCorsPaths(): bool
+    {
+        $paths = config('cors.paths', []);
+
+        $host = request()->getHost();
+        if (isset($paths[$host])) {
+            $paths = $paths[$host];
+        }
+
+        foreach ($paths as $path) {
+            if (! is_string($path)) {
+                continue;
+            }
+
+            if ($path !== '/') {
+                $path = trim($path, '/');
+            }
+
+            if (request()->is($path)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static function addCacheHeaders(JsonResponse $response): void

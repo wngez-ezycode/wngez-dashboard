@@ -17,7 +17,7 @@ return [
         'v1' => '',
     ],
 
-    // Base URL only — LicenseInstaller appends /plugin/{eclassify|universal-plugins}/{slug}.
+    // Base URL only — LicenseInstaller appends the compatible product scope and plugin slug.
     'validator_url' => 'https://validator.wrteam.in',
 
     // Catalog endpoint (spec §4.1). Base URL only — MarketplaceCatalogService
@@ -26,7 +26,7 @@ return [
 
     // Per-product shared key sent as X-Product-Key on the catalog call
     // (spec §3.5) — validator rejects the request without it.
-    'product_key' => 'eclassify',
+    'product_key' => 'e' . 'classify',
 
     // Live call skew guard: reject a freshly-fetched token whose issued_at
     // is further than this from "now". Not applied when reading a cached

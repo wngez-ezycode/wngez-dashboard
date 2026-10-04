@@ -52,13 +52,13 @@
                         <div class="form-group col-md-6 col-sm-12">
                             <label class="form-label ">{{ __('Header Logo') }}</label>
                             <input class="filepond" type="file" name="header_logo" id="header_logo">
-                            <img src="{{ $settings['header_logo'] ?? '' }}" data-custom-image="{{asset('assets/images/logo/Header Logo.svg')}}" class="w-25" alt="image">
+                            <img src="{{ $settings['header_logo'] ?? '' }}" data-custom-image="{{asset('assets/images/logo/wngez-logo.png')}}" class="w-25" alt="image">
                         </div>
 
                         <div class="form-group col-md-6 col-sm-12">
                             <label class="form-label ">{{ __('Footer Logo') }}</label>
                             <input class="filepond" type="file" name="footer_logo" id="footer_logo">
-                            <img src="{{ $settings['footer_logo'] ?? '' }}" data-custom-image="{{asset('assets/images/logo/Footer Logo.svg')}}" class="w-25" alt="image">
+                            <img src="{{ $settings['footer_logo'] ?? '' }}" data-custom-image="{{asset('assets/images/logo/wngez-logo.png')}}" class="w-25" alt="image">
                         </div>
 
                         <div class="form-group col-md-6 col-sm-12">

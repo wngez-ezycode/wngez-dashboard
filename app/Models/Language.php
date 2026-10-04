@@ -36,9 +36,11 @@ class Language extends Model
     {
         if (! empty($value)) {
             if ($this->code == 'en') {
-                return asset('/assets/images/'.$value);
+                return asset('/assets/images/' . $value);
             }
-
+            if (file_exists(public_path('assets/images/' . $value))) {
+                return asset('assets/images/' . $value);
+            }
             return url(Storage::url($value));
         }
 

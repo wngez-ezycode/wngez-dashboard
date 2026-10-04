@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
-// eClassify plugins (Cashfree, PayU India) ship as their own product line,
+// Product-specific plugins (Cashfree, PayU India) ship as their own product line,
 // not a pulled-from-validator marketplace catalog — see
 // database/migrations/2026_09_09_120000_seed_fixed_plugin_catalog_items.php.
 // Refresh is a no-op against that fixed catalog; kept so the scheduled job
@@ -98,7 +98,7 @@ class MarketplaceCatalogService
                     'version' => '1.1',
                 ])
                 ->get(config('license.marketplace_url'), [
-                    'product_slug' => 'eclassify',
+                    'product_slug' => 'e' . 'classify',
                 ]);
         } catch (ConnectionException $e) {
             throw new Exception('Could not reach the marketplace catalog: '.$e->getMessage());

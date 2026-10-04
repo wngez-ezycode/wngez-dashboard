@@ -59,7 +59,8 @@ class NotificationController extends Controller
             $serviceFile = Setting::where('name', 'service_file')->first();
             if(collect($serviceFile)->isNotEmpty()){
                 $file = $serviceFile->getRawOriginal('value') ?? null;
-                $serviceFileExists = FileService::fileExists($file);
+                $serviceFileExists = ($file === 'firebase_service.json' && file_exists(storage_path('app/firebase_service.json')))
+                    || FileService::fileExists($file);
             }
             // Get Firebase Project ID
             $firebaseProjectId = CachingService::getSystemSettings('firebase_project_id');

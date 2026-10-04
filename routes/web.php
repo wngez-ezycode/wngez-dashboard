@@ -362,11 +362,11 @@ Route::group(['middleware' => ['auth', 'language']], static function () {
         Route::get('reel-settings', [SettingController::class, 'page'])->name('settings.reel-settings');
         Route::post('reel-settings/store', [SettingController::class, 'reelSettingsStore'])->name('settings.reel-settings.store');
     });
-    Route::group(['prefix' => 'system-update'], static function () {
-        Route::get('/', [SystemUpdateController::class, 'index'])->name('system-update.index');
-        Route::post('/', [SystemUpdateController::class, 'update'])->name('system-update.update');
-    });
-    Route::get('reset-purchase-code', [SystemUpdateController::class, 'resetPurchaseCode'])->name('system-update.reset-purchase-code');
+    // Route::group(['prefix' => 'system-update'], static function () {
+    //     Route::get('/', [SystemUpdateController::class, 'index'])->name('system-update.index');
+    //     Route::post('/', [SystemUpdateController::class, 'update'])->name('system-update.update');
+    // });
+    // Route::get('reset-purchase-code', [SystemUpdateController::class, 'resetPurchaseCode'])->name('system-update.reset-purchase-code');
     /*** Setting Module : END ***/
 
     /*** Plugin Manager : START ***/

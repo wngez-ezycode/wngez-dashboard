@@ -169,6 +169,7 @@ Route::get('get-report-reasons', [SettingsApiController::class, 'getReportReason
 Route::get('faq', [SettingsApiController::class, 'getFaqs']);
 Route::get('tips', [SettingsApiController::class, 'getTips']);
 Route::post('contact-us', [SettingsApiController::class, 'storeContactUs']);
+Route::post('newsletter-subscribe', [SettingsApiController::class, 'subscribeNewsletter'])->middleware('throttle:10,1');
 
 /* Package Module */
 Route::get('get-package', [PackageApiController::class, 'getPackage']);

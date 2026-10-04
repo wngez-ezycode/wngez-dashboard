@@ -255,7 +255,8 @@ class AuthApiController extends BaseApiController
         $validator = Validator::make($request->all(), [
             'mobile' => 'nullable|string',
             'country_code' => 'required_with:mobile|string',
-            'firebase_id' => 'required_without:mobile|string'
+            'firebase_id' => 'nullable|string',
+            'email' => 'nullable|email',
         ]);
 
         if ($validator->fails()) {
@@ -266,13 +267,23 @@ class AuthApiController extends BaseApiController
             $mobile = ltrim($request->mobile, '+');
             $countryCode = ltrim($request->country_code, '+');
             $firebaseId = $request->has('firebase_id') ? $request->firebase_id : null;
+            $email = $request->has('email') ? $request->email : null;
             $userExists = User::when($mobile, function ($query) use ($mobile,$countryCode) {
                         $query->where(['mobile' => $mobile])->where('country_code', 'LIKE', '%'.$countryCode.'%'); // Need to improve in future
                     })
-                    ->when($firebaseId, function ($query) use ($firebaseId) {
-                        $query->whereHas('socialLogins', function ($query) use ($firebaseId) {
-                            $query->where('firebase_id', $firebaseId);
+                    ->when($firebaseId, function ($query) use ($firebaseId, $email) {
+                        $query->where(function ($sub) use ($firebaseId, $email) {
+                            $sub->whereHas('socialLogins', function ($q) use ($firebaseId) {
+                                $q->where('firebase_id', $firebaseId);
+                            });
+                            if ($email) {
+                                $sub->orWhere('email', $email);
+                            }
                         });
+                    }, function ($query) use ($email) {
+                        if ($email) {
+                            $query->where('email', $email);
+                        }
                     })
                     ->withTrashed()
                     ->first();

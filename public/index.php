@@ -4,9 +4,12 @@ ob_start();
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
-header('Access-Control-Allow-Headers: token, Content-Type, authorization, x-seed-key');
+// CORS is handled by Laravel's `HandleCors` middleware (config/cors.php).
+// Do NOT add Access-Control-* headers here: PHP appends raw `header()` calls
+// to the ones the framework already sends, so the response ends up with
+// `Access-Control-Allow-Origin` twice — browsers reject that outright
+// ("header contains multiple values '*, *'") and every cross-origin request
+// from the web app fails with an XHR connection error.
 define('LARAVEL_START', microtime(true));
 
 /*

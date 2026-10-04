@@ -26,13 +26,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth')->except([
             'sendPasswordResetOtp',
             'verifyPasswordResetOtp',
@@ -41,11 +43,12 @@ class HomeController extends Controller {
     }
 
 
-    public function index() {
+    public function index()
+    {
         // Top stat cards
         $total_advertisement = Item::without('image')->withTrashed()->count();
         $featured_listing    = FeaturedItems::onlyActive()->count();
-        $active_listing      = Item::without('image')->where(function($query){
+        $active_listing      = Item::without('image')->where(function ($query) {
             $query->whereNull('expiry_date')->orWhere('expiry_date', '>=', Carbon::now());
         })->where('status', 'approved')->count();
         $expired_listing     = Item::without('image')->whereNotNull('expiry_date')->where('expiry_date', '<', Carbon::now())->where('status', '!=', 'sold out')->whereNull('deleted_at')->count();
@@ -54,7 +57,9 @@ class HomeController extends Controller {
         // Side stat cards
         $user_count          = User::role('User')->count();
         $subscription_count  = UserPurchasedPackage::whereDate('start_date', '<=', now())
-            ->where(function ($q) { $q->whereDate('end_date', '>=', now())->orWhereNull('end_date'); })->count('user_id');
+            ->where(function ($q) {
+                $q->whereDate('end_date', '>=', now())->orWhereNull('end_date');
+            })->count('user_id');
         $favorite_count      = Favourite::distinct('item_id')->count();
         $reviews_count       = SellerRating::count();
         $categories_count    = Category::count();
@@ -89,9 +94,9 @@ class HomeController extends Controller {
             'itemOffer.item.gallery_images',
             'itemOffer.buyer:id,name,profile',
         ])
-        ->whereIn('id', $latestChatIds)
-        ->orderByDesc('id')
-        ->get();
+            ->whereIn('id', $latestChatIds)
+            ->orderByDesc('id')
+            ->get();
 
         $unreadCounts = Chat::selectRaw('item_offer_id, COUNT(*) as cnt')
             ->whereIn('item_offer_id', $new_messages->pluck('item_offer_id'))
@@ -108,13 +113,13 @@ class HomeController extends Controller {
         $statusAdsQuery = Item::without('image')->withTrashed();
         $expiredCounts = $statusAdsQuery->clone()->whereNotNull('expiry_date')->where('expiry_date', '<', Carbon::now())->where('status', '!=', 'sold out')->count();
         $inactiveCounts = $statusAdsQuery->clone()->whereNotNull('deleted_at')->count();
-        $soldOutCounts = $statusAdsQuery->clone()->where('status','sold out')->count();
+        $soldOutCounts = $statusAdsQuery->clone()->where('status', 'sold out')->count();
         $statusCounts = $statusAdsQuery->whereNull('deleted_at')
-                            ->where(function ($q) {
-                                $q->whereNull('expiry_date')
-                                    ->orWhere('expiry_date', '>=', Carbon::now());
-                            })->clone()->get(['status'])->groupBy('status')->map->count();
-        $ads_stats_labels = ['Active', 'Under Review', 'Sold Out', 'Expired', 'Rejected', 'Inactive', 'Resubmitted'];
+            ->where(function ($q) {
+                $q->whereNull('expiry_date')
+                    ->orWhere('expiry_date', '>=', Carbon::now());
+            })->clone()->get(['status'])->groupBy('status')->map->count();
+        $ads_stats_labels = [__('Active'), __('Under Review'), __('Sold Out'), __('Expired'), __('Rejected'), __('Inactive'), __('Resubmitted')];
         $ads_stats_data = [
             (int) ($statusCounts['approved'] ?? 0),
             (int) ($statusCounts['review'] ?? 0),
@@ -142,7 +147,7 @@ class HomeController extends Controller {
                 $byMain[$root] = ($byMain[$root] ?? 0) + (int) $cnt;
             }
             return collect($byMain)
-                ->map(fn($v, $k) => ['label' => optional($cats->get($k))->translated_name ?? 'Unknown', 'val' => $v])
+                ->map(fn($v, $k) => ['label' => optional($cats->get($k))->translated_name ?? __('Unknown'), 'val' => $v])
                 ->sortByDesc('val')->values()->toArray();
         };
 
@@ -159,7 +164,7 @@ class HomeController extends Controller {
         // Customer Statistics donut
         $cust_active     = User::role('User')->whereNull('deleted_at')->count();
         $cust_inactive   = User::role('User')->onlyTrashed()->count();
-        $customer_stats_labels = ['Active', 'Inactive'];
+        $customer_stats_labels = [__('Active'), __('Inactive')];
         $customer_stats_data   = [$cust_active, $cust_inactive];
 
         // Legacy category pie data (kept for backward compat — unused in new view)
@@ -169,20 +174,36 @@ class HomeController extends Controller {
         $items = collect();
 
         return view('home', compact(
-            'total_advertisement', 'featured_listing', 'active_listing', 'expired_listing', 'sold_listing',
-            'user_count', 'subscription_count', 'favorite_count', 'reviews_count',
-            'categories_count', 'item_count', 'custom_field_count',
+            'total_advertisement',
+            'featured_listing',
+            'active_listing',
+            'expired_listing',
+            'sold_listing',
+            'user_count',
+            'subscription_count',
+            'favorite_count',
+            'reviews_count',
+            'categories_count',
+            'item_count',
+            'custom_field_count',
             'revenue',
             'new_messages',
-            'ads_stats_labels', 'ads_stats_data',
-            'ads_per_cat_labels', 'ads_per_cat_data',
-            'sold_per_cat_labels', 'sold_per_cat_data',
-            'customer_stats_labels', 'customer_stats_data',
-            'category_name', 'category_item_count', 'items'
+            'ads_stats_labels',
+            'ads_stats_data',
+            'ads_per_cat_labels',
+            'ads_per_cat_data',
+            'sold_per_cat_labels',
+            'sold_per_cat_data',
+            'customer_stats_labels',
+            'customer_stats_data',
+            'category_name',
+            'category_item_count',
+            'items'
         ));
     }
 
-    private function buildRevenue(string $range): array {
+    private function buildRevenue(string $range): array
+    {
         if ($range === 'week') {
             $start = Carbon::now()->startOfWeek();
             $end   = Carbon::now()->endOfWeek();
@@ -260,7 +281,8 @@ class HomeController extends Controller {
         return ['labels' => $labels, 'subscription' => $subscription, 'feature' => $feature];
     }
 
-    private function topWithOther(array $rows, int $top = 5, bool $withOther = true): array {
+    private function topWithOther(array $rows, int $top = 5, bool $withOther = true): array
+    {
         $rows = array_values(array_filter($rows, fn($r) => ($r['val'] ?? 0) > 0));
         if (empty($rows)) {
             return [[], []];
@@ -270,18 +292,21 @@ class HomeController extends Controller {
         $labels = array_map(fn($r) => $r['label'], $head);
         $data   = array_map(fn($r) => (int) $r['val'], $head);
         if ($withOther && !empty($tail)) {
-            $labels[] = 'Other';
+            $labels[] = __('Other');
             $data[]   = (int) array_sum(array_map(fn($r) => $r['val'], $tail));
         }
         return [$labels, $data];
     }
 
-    public function recentAdsTable(Request $request) {
+    public function recentAdsTable(Request $request)
+    {
         $sort  = $request->input('sort', 'id');
         $order = strtoupper($request->input('order', 'DESC'));
 
         $result = Item::with([
-            'user' => function ($q) { $q->withTrashed()->select('id', 'name', 'email', 'profile', 'deleted_at'); },
+            'user' => function ($q) {
+                $q->withTrashed()->select('id', 'name', 'email', 'profile', 'deleted_at');
+            },
             'gallery_images',
             'category:id,name',
             'currency:id,symbol',
@@ -314,7 +339,8 @@ class HomeController extends Controller {
         return response()->json(['total' => $total, 'rows' => $rows]);
     }
 
-    public function recentReportsTable(Request $request) {
+    public function recentReportsTable(Request $request)
+    {
         $sort  = $request->input('sort', 'id');
         $order = strtoupper($request->input('order', 'DESC'));
 
@@ -361,13 +387,16 @@ class HomeController extends Controller {
         return response()->json(['total' => $total, 'rows' => $rows]);
     }
 
-    public function topCustomersTable(Request $request) {
+    public function topCustomersTable(Request $request)
+    {
         $sort  = $request->input('sort', 'listing_count');
         $order = strtoupper($request->input('order', 'DESC'));
 
         $result = User::role('User')
             ->withCount(['items as listing_count'])
-            ->withCount(['items as sold_count' => function ($q) { $q->where('status', 'sold out'); }])
+            ->withCount(['items as sold_count' => function ($q) {
+                $q->where('status', 'sold out');
+            }])
             ->orderByDesc('listing_count')->limit(10)->get();
 
         $result = $this->sortCollection($result, $sort, $order);
@@ -376,7 +405,8 @@ class HomeController extends Controller {
         return response()->json(['total' => $total, 'rows' => $rows]);
     }
 
-    public function mostViewedTable(Request $request) {
+    public function mostViewedTable(Request $request)
+    {
         $sort  = $request->input('sort', 'clicks');
         $order = strtoupper($request->input('order', 'DESC'));
 
@@ -386,7 +416,7 @@ class HomeController extends Controller {
 
         $result = $this->sortCollection($result, $sort, $order);
         $total  = $result->count();
-        $rows   = $result->map(function($it) {
+        $rows   = $result->map(function ($it) {
             $operate = '';
             if (Auth::user()->can('advertisement-list')) {
                 $operate .= BootstrapTableService::button('fa fa-eye', 'javascript:void(0)', ['view', 'recent-ad-view'], ['title' => __('View'), 'data-row' => json_encode($it)]);
@@ -394,11 +424,12 @@ class HomeController extends Controller {
             $itemData = $it->toArray();
             $itemData['operate'] = $operate;
             return $itemData;
-        } )->values()->all();
+        })->values()->all();
         return response()->json(['total' => $total, 'rows' => $rows]);
     }
 
-    private function sortCollection($collection, string $sort, string $order) {
+    private function sortCollection($collection, string $sort, string $order)
+    {
         $desc = strtoupper($order) === 'DESC';
         $sorted = $collection->sortBy(function ($row) use ($sort) {
             $val = data_get($row, $sort);
@@ -410,7 +441,8 @@ class HomeController extends Controller {
         return $sorted->values();
     }
 
-    public function changePasswordIndex() {
+    public function changePasswordIndex()
+    {
         $this->clearPasswordResetState();
 
         return view('change_password.index', [
@@ -419,7 +451,8 @@ class HomeController extends Controller {
     }
 
 
-    public function changePasswordUpdate(Request $request) {
+    public function changePasswordUpdate(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'old_password'     => 'required',
             'new_password'     => 'required|min:8',
@@ -440,8 +473,6 @@ class HomeController extends Controller {
             ResponseService::logErrorResponse($th, "HomeController --> changePasswordUpdate");
             ResponseService::errorResponse();
         }
-
-
     }
 
     public function sendPasswordResetOtp(Request $request)
@@ -629,11 +660,13 @@ class HomeController extends Controller {
     }
 
 
-    public function changeProfileIndex() {
+    public function changeProfileIndex()
+    {
         return view('change_profile.index');
     }
 
-    public function changeProfileUpdate(Request $request) {
+    public function changeProfileUpdate(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name'    => 'required',
             'email'   => 'required|email|unique:users,email,' . Auth::user()->id,
@@ -657,7 +690,6 @@ class HomeController extends Controller {
             ResponseService::logErrorResponse($th, "HomeController --> updateProfile");
             ResponseService::errorResponse();
         }
-
     }
     public function getMapsData()
     {

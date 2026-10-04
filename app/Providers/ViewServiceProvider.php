@@ -55,7 +55,7 @@ class ViewServiceProvider extends ServiceProvider
 
         View::composer('auth.login', static function (\Illuminate\View\View $view) {
             // Get Required Settings Data from DB
-            $settings = ['favicon_icon','company_logo','login_image','admin_primary_color'];
+            $settings = ['favicon_icon','company_logo','login_image','admin_primary_color','company_name'];
             $settingData = CachingService::getSystemSettings($settings);
 
             // Get specific data
@@ -63,17 +63,18 @@ class ViewServiceProvider extends ServiceProvider
             $companyLogo = isset($settingData['company_logo']) && !empty($settingData['company_logo']) ? $settingData['company_logo'] : null;
             $LoginBgImage = isset($settingData['login_image']) && !empty($settingData['login_image']) ? $settingData['login_image'] : null;
             $adminPrimaryColor =  isset($settingData['admin_primary_color']) && !empty($settingData['admin_primary_color']) ? $settingData['admin_primary_color'] : '#0878F9';
-
+            $companyName = isset($settingData['company_name']) && !empty($settingData['company_name']) ? $settingData['company_name'] : config('app.name', 'WngeZ');
 
             $view->with('company_logo', $companyLogo);
             $view->with('favicon', $faviconIcon);
             $view->with('login_bg_image', $LoginBgImage);
             $view->with('theme_color', $adminPrimaryColor);
+            $view->with('company_name', $companyName);
         });
 
         View::composer('auth.forgot-password', static function (\Illuminate\View\View $view) {
             // Get Required Settings Data from DB
-            $settings = ['favicon_icon','company_logo','login_image','admin_primary_color'];
+            $settings = ['favicon_icon','company_logo','login_image','admin_primary_color','company_name'];
             $settingData = CachingService::getSystemSettings($settings);
 
             // Get specific data
@@ -81,18 +82,19 @@ class ViewServiceProvider extends ServiceProvider
             $companyLogo = isset($settingData['company_logo']) && !empty($settingData['company_logo']) ? $settingData['company_logo'] : null;
             $LoginBgImage = isset($settingData['login_image']) && !empty($settingData['login_image']) ? $settingData['login_image'] : null;
             $adminPrimaryColor =  isset($settingData['admin_primary_color']) && !empty($settingData['admin_primary_color']) ? $settingData['admin_primary_color'] : '#0878F9';
-
+            $companyName = isset($settingData['company_name']) && !empty($settingData['company_name']) ? $settingData['company_name'] : config('app.name', 'WngeZ');
 
             $view->with('company_logo', $companyLogo);
             $view->with('favicon', $faviconIcon);
             $view->with('login_bg_image', $LoginBgImage);
             $view->with('theme_color', $adminPrimaryColor);
+            $view->with('company_name', $companyName);
         });
 
         View::composer('layouts.footer_script', static function (\Illuminate\View\View $view) {
             $settingData = CachingService::getSystemSettings([
                 'apiKey', 'authDomain', 'projectId', 'storageBucket',
-                'messagingSenderId', 'appId', 'vapidKey'
+                'messagingSenderId', 'appId', 'measurementId', 'vapidKey'
             ]);
 
             $firebaseWebConfig = [
@@ -102,6 +104,7 @@ class ViewServiceProvider extends ServiceProvider
                 'storageBucket' => $settingData['storageBucket'] ?? null,
                 'messagingSenderId' => $settingData['messagingSenderId'] ?? null,
                 'appId' => $settingData['appId'] ?? null,
+                'measurementId' => $settingData['measurementId'] ?? null,
                 'vapidKey' => $settingData['vapidKey'] ?? null,
             ];
 

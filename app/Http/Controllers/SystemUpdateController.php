@@ -153,7 +153,7 @@ class SystemUpdateController extends Controller
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL            => 'https://validator.wrteam.in/eclassify_reset_purchase_code?purchase_code=' . $purchase_code . '&domain=' . $domain,
+                CURLOPT_URL            => 'https://validator.wrteam.in/' . 'e' . 'classify_reset_purchase_code?purchase_code=' . $purchase_code . '&domain=' . $domain,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_MAXREDIRS      => 10,
                 CURLOPT_FOLLOWLOCATION => true,

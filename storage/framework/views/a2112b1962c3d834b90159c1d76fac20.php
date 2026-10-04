@@ -28,37 +28,46 @@
             background-color: #fdf0f0 !important;
             border-left: 4px solid #dc3545 !important;
         }
+
         #table_list tbody tr.deleted-user-row td {
             color: #999 !important;
         }
+
         #table_list tbody tr.deleted-user-row img {
             filter: grayscale(100%);
             opacity: 0.5;
         }
+
         #table_list tbody tr.deleted-user-row .badge.bg-danger {
             filter: none;
             opacity: 1;
             color: #fff !important;
         }
+
         #table_list tbody tr.deleted-user-row .badge {
             opacity: 0.7;
         }
+
         #table_list tbody tr.deleted-user-row .btn {
             opacity: 0.8;
         }
+
         #adPreviewMapWrap {
             position: relative;
             height: 200px;
             overflow: hidden !important;
             isolation: isolate;
         }
+
         #adPreviewLeafletMap {
             height: 200px !important;
             width: 100%;
         }
+
         #adPreviewLeafletMap.leaflet-container {
             z-index: 1;
         }
+
         /* keep leaflet panes/controls clipped inside the wrap, off the button */
         #adPreviewMapWrap .leaflet-pane,
         #adPreviewMapWrap .leaflet-top,
@@ -95,46 +104,48 @@
                             </div>
                             <div class="col-12 col-md-auto">
                                 <button type="button" class="btn btn-outline-secondary w-100" id="btn-admin-ads">
-                                    <?php echo e(__("Admin Advertisements")); ?>
+                                    <?php echo e(__('Admin Advertisements')); ?>
 
                                 </button>
                             </div>
                             <div class="col-12 col-md-auto">
                                 <button type="button" class="btn btn-outline-danger w-100" id="btn-favorite-ads">
-                                    <?php echo e(__("Favorite Ads")); ?>
+                                    <?php echo e(__('Favorite Ads')); ?>
 
                                 </button>
                             </div>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('advertisement-update')): ?>
-                            <div class="col-12 col-md-auto ms-md-auto" id="bulk-action-btns" style="display:none;">
-                                <button type="button" class="btn btn-warning" id="btn-bulk-update-status">
-                                    <i class="fas fa-toggle-on me-1"></i>
-                                    <?php echo e(__('Update Status')); ?>
+                                <div class="col-12 col-md-auto ms-md-auto" id="bulk-action-btns" style="display:none;">
+                                    <button type="button" class="btn btn-warning" id="btn-bulk-update-status">
+                                        <i class="fas fa-toggle-on me-1"></i>
+                                        <?php echo e(__('Update Status')); ?>
 
-                                    (<span id="selected-count">0</span> <?php echo e(__('selected')); ?>)
-                                </button>
-                            </div>
+                                        (<span id="selected-count">0</span> <?php echo e(__('selected')); ?>)
+                                    </button>
+                                </div>
                             <?php endif; ?>
                         </div>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('advertisement-update')): ?>
-                        <div class="text-muted small mb-2">
-                            <i class="fas fa-info-circle me-1"></i>
-                            <?php echo e(__('Select multiple rows using checkboxes to bulk update their status.')); ?>
+                            <div class="text-muted small mb-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                <?php echo e(__('Select multiple rows using checkboxes to bulk update their status.')); ?>
 
-                        </div>
+                            </div>
                         <?php endif; ?>
 
                         <div id="filters">
-                            <div class="row g-2 align-items-end mb-2">
-                                <div class="col-12 col-md-5 col-lg-4" id="p_category_col">
-                                    <label for="p_category"><?php echo e(__('Category')); ?></label>
-                                    <select name="category_id" id="p_category" class="form-control bootstrap-table-filter-control-category" aria-label="category" data-placeholder="<?php echo e(__('All')); ?>">
+                            <div class="d-flex flex-wrap align-items-end gap-2 mb-2">
+                                <div id="p_category_col" style="min-width: 160px; max-width: 200px;">
+                                    <label for="p_category" class="form-label mb-1 small text-muted fw-semibold"><?php echo e(__('Category')); ?></label>
+                                    <select name="category_id" id="p_category"
+                                        class="form-control bootstrap-table-filter-control-category" aria-label="category"
+                                        data-placeholder="<?php echo e(__('All')); ?>">
                                         <option value=""><?php echo e(__('All')); ?></option>
                                         <?php echo $__env->make('category.dropdowntree', ['categories' => $categories], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-4 col-lg-3">
-                                    <label for="filter"><?php echo e(__('Status')); ?></label>
+                                <div style="min-width: 140px; max-width: 170px;">
+                                    <label for="filter" class="form-label mb-1 small text-muted fw-semibold"><?php echo e(__('Status')); ?></label>
                                     <select class="form-control" id="filter" data-field="status">
                                         <option value=""><?php echo e(__('All')); ?></option>
                                         <option value="approved"><?php echo e(__('Approved')); ?></option>
@@ -148,14 +159,19 @@
                                         <option value="deleted_user"><?php echo e(__('Deleted User')); ?></option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-auto ms-auto d-flex align-items-end gap-2">
-                                    <button type="button" class="btn btn-outline-primary" id="btn-toggle-more-filters" data-bs-toggle="collapse" data-bs-target="#moreFiltersCollapse" aria-expanded="false">
+                                <div class="d-flex align-items-end gap-2">
+                                    <button type="button" class="btn btn-outline-primary" id="btn-toggle-more-filters"
+                                        data-bs-toggle="collapse" data-bs-target="#moreFiltersCollapse"
+                                        aria-expanded="false">
                                         <i class="fas fa-sliders-h me-1"></i> <?php echo e(__('More Filters')); ?>
 
-                                        <span class="badge bg-primary text-white ms-1 d-none" id="more-filters-badge">0</span>
-                                        <i class="fas fa-chevron-down ms-1" id="more-filters-chevron" style="transition: transform 0.2s;"></i>
+                                        <span class="badge bg-primary text-white ms-1 d-none"
+                                            id="more-filters-badge">0</span>
+                                        <i class="fas fa-chevron-down ms-1" id="more-filters-chevron"
+                                            style="transition: transform 0.2s;"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary" id="btn-reset-filters" title="<?php echo e(__('Reset Filters')); ?>">
+                                    <button type="button" class="btn btn-outline-secondary" id="btn-reset-filters"
+                                        title="<?php echo e(__('Reset Filters')); ?>">
                                         <i class="fas fa-undo me-1"></i> <?php echo e(__('Reset')); ?>
 
                                     </button>
@@ -194,14 +210,16 @@
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-2">
                                             <label for="filter_state_item"><?php echo e(__('State')); ?></label>
-                                            <select name="state_id" class="form-control bootstrap-table-filter-control-state"
+                                            <select name="state_id"
+                                                class="form-control bootstrap-table-filter-control-state"
                                                 id="filter_state_item">
                                                 <option value=""><?php echo e(__('All')); ?></option>
                                             </select>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                                             <label for="filter_city_item"><?php echo e(__('City')); ?></label>
-                                            <select name="city_id" class="form-control bootstrap-table-filter-control-city"
+                                            <select name="city_id"
+                                                class="form-control bootstrap-table-filter-control-city"
                                                 id="filter_city_item">
                                                 <option value=""><?php echo e(__('All')); ?></option>
                                             </select>
@@ -213,56 +231,215 @@
                         <div class="table-responsive">
                             <?php
                                 $itemCols = [];
-                                if(auth()->user()->can('advertisement-update')) {
-                                    $itemCols[] = ['field'=>'state','title'=>'','checkbox'=>true];
+                                if (auth()->user()->can('advertisement-update')) {
+                                    $itemCols[] = ['field' => 'state', 'title' => '', 'checkbox' => true];
                                 }
                                 $itemCols = array_merge($itemCols, [
-                                    ['field'=>'id','title'=>__('ID'),'sortable'=>true],
-                                    ['field'=>'name','title'=>__('Name'),'sortable'=>true],
-                                    ['field'=>'description','title'=>__('Description'),'sortable'=>true,'formatter'=>'descriptionFormatter'],
-                                    ['field'=>'user_profile','title'=>__('User'),'formatter'=>'userProfileFormatter'],
-                                    ['field'=>'price','title'=>__('Price'),'sortable'=>true],
-                                    ['field'=>'min_salary','title'=>__('Min Salary'),'sortable'=>true,'visible'=>false],
-                                    ['field'=>'max_salary','title'=>__('Max Salary'),'sortable'=>true,'visible'=>false],
-                                    ['field'=>'category.name','title'=>__('Category'),'sortable'=>true],
-                                    ['field'=>'reel.video','title'=>__('Video Ad'),'sortable'=>false,'formatter'=>'reelCircleFormatter','escape'=>false,'align'=>'center'],
-                                    ['field'=>'gallery_images','title'=>__('Images'),'sortable'=>false,'formatter'=>'galleryImageFormatter','escape'=>false],
-                                    ['field'=>'latitude','title'=>__('Latitude'),'sortable'=>true,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'longitude','title'=>__('Longitude'),'sortable'=>true,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'address','title'=>__('Address'),'sortable'=>true,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'contact','title'=>__('Contact'),'sortable'=>true,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'address','title'=>__('Address'),'sortable'=>true,'filterControl'=>'select','filterData'=>'','visible'=>true,'formatter'=>'addressFormatter'],
-                                    ['field'=>'featured_status','title'=>__('Featured or Not'),'sortable'=>false,'visible'=>false,'filterControl'=>'select','filterData'=>'','formatter'=>'featuredItemStatusFormatter'],
-                                    ['field'=>'status','title'=>__('Status'),'sortable'=>false,'escape'=>false,'formatter'=>'itemStatusFormatter'],
+                                    ['field' => 'id', 'title' => __('ID'), 'sortable' => true],
+                                    ['field' => 'name', 'title' => __('Name'), 'sortable' => true],
+                                    [
+                                        'field' => 'description',
+                                        'title' => __('Description'),
+                                        'sortable' => true,
+                                        'formatter' => 'descriptionFormatter',
+                                    ],
+                                    [
+                                        'field' => 'user_profile',
+                                        'title' => __('User'),
+                                        'formatter' => 'userProfileFormatter',
+                                    ],
+                                    ['field' => 'price', 'title' => __('Price'), 'sortable' => true],
+                                    [
+                                        'field' => 'min_salary',
+                                        'title' => __('Min Salary'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                    ],
+                                    [
+                                        'field' => 'max_salary',
+                                        'title' => __('Max Salary'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                    ],
+                                    ['field' => 'category.name', 'title' => __('Category'), 'sortable' => true],
+                                    [
+                                        'field' => 'reel.video',
+                                        'title' => __('Video Ad'),
+                                        'sortable' => false,
+                                        'formatter' => 'reelCircleFormatter',
+                                        'escape' => false,
+                                        'align' => 'center',
+                                    ],
+                                    [
+                                        'field' => 'gallery_images',
+                                        'title' => __('Images'),
+                                        'sortable' => false,
+                                        'formatter' => 'galleryImageFormatter',
+                                        'escape' => false,
+                                    ],
+                                    [
+                                        'field' => 'latitude',
+                                        'title' => __('Latitude'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'longitude',
+                                        'title' => __('Longitude'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'address',
+                                        'title' => __('Address'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'contact',
+                                        'title' => __('Contact'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'address',
+                                        'title' => __('Address'),
+                                        'sortable' => true,
+                                        'filterControl' => 'select',
+                                        'filterData' => '',
+                                        'visible' => true,
+                                        'formatter' => 'addressFormatter',
+                                    ],
+                                    [
+                                        'field' => 'featured_status',
+                                        'title' => __('Featured or Not'),
+                                        'sortable' => false,
+                                        'visible' => false,
+                                        'filterControl' => 'select',
+                                        'filterData' => '',
+                                        'formatter' => 'featuredItemStatusFormatter',
+                                    ],
+                                    [
+                                        'field' => 'status',
+                                        'title' => __('Status'),
+                                        'sortable' => false,
+                                        'escape' => false,
+                                        'formatter' => 'itemStatusFormatter',
+                                    ],
                                 ]);
-                                if(auth()->user()->can('advertisement-update')) {
-                                    $itemCols[] = ['field'=>'active_status','title'=>__('Active'),'sortable'=>true,'visible'=>true,'escape'=>false,'formatter'=>'statusSwitchFormatter','attrs'=>['data-sort-name'=>'deleted_at']];
+                                if (auth()->user()->can('advertisement-update')) {
+                                    $itemCols[] = [
+                                        'field' => 'active_status',
+                                        'title' => __('Active'),
+                                        'sortable' => true,
+                                        'visible' => true,
+                                        'escape' => false,
+                                        'formatter' => 'statusSwitchFormatter',
+                                        'attrs' => ['data-sort-name' => 'deleted_at'],
+                                    ];
                                 }
                                 $itemCols = array_merge($itemCols, [
-                                    ['field'=>'rejected_reason','title'=>__('Rejected Reason'),'sortable'=>true,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'created_at','title'=>__('Created At'),'sortable'=>true,'visible'=>false,'align'=>'center'],
-                                    ['field'=>'published_at','title'=>__('Published Date'),'sortable'=>true,'visible'=>false,'align'=>'center'],
-                                    ['field'=>'renewed_at','title'=>__('Renewed Date'),'sortable'=>true,'visible'=>false,'align'=>'center'],
-                                    ['field'=>'expiry_date','title'=>__('Expiry Date'),'sortable'=>true,'visible'=>false,'align'=>'center'],
-                                    ['field'=>'user_id','title'=>__('User ID'),'sortable'=>false,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'category_id','title'=>__('Category ID'),'sortable'=>true,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'likes','title'=>__('Likes'),'sortable'=>true,'visible'=>false,'switchable'=>false],
-                                    ['field'=>'clicks','title'=>__('Clicks'),'sortable'=>true,'visible'=>false,'align'=>'center','formatter'=>'clicksFormatter'],
+                                    [
+                                        'field' => 'rejected_reason',
+                                        'title' => __('Rejected Reason'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'created_at',
+                                        'title' => __('Created At'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'align' => 'center',
+                                    ],
+                                    [
+                                        'field' => 'published_at',
+                                        'title' => __('Published Date'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'align' => 'center',
+                                    ],
+                                    [
+                                        'field' => 'renewed_at',
+                                        'title' => __('Renewed Date'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'align' => 'center',
+                                    ],
+                                    [
+                                        'field' => 'expiry_date',
+                                        'title' => __('Expiry Date'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'align' => 'center',
+                                    ],
+                                    [
+                                        'field' => 'user_id',
+                                        'title' => __('User ID'),
+                                        'sortable' => false,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'category_id',
+                                        'title' => __('Category ID'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'likes',
+                                        'title' => __('Likes'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'switchable' => false,
+                                    ],
+                                    [
+                                        'field' => 'clicks',
+                                        'title' => __('Clicks'),
+                                        'sortable' => true,
+                                        'visible' => false,
+                                        'align' => 'center',
+                                        'formatter' => 'clicksFormatter',
+                                    ],
                                 ]);
-                                if(auth()->user()->canany(['advertisement-update','advertisement-delete'])) {
-                                    $itemCols[] = ['field'=>'operate','title'=>__('Action'),'sortable'=>false,'events'=>'itemEvents','escape'=>false];
+                                if (
+                                    auth()
+                                        ->user()
+                                        ->canany(['advertisement-update', 'advertisement-delete'])
+                                ) {
+                                    $itemCols[] = [
+                                        'field' => 'operate',
+                                        'title' => __('Action'),
+                                        'sortable' => false,
+                                        'events' => 'itemEvents',
+                                        'escape' => false,
+                                    ];
                                 }
                             ?>
                             <?php if (isset($component)) { $__componentOriginalc8463834ba515134d5c98b88e1a9dc03 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc8463834ba515134d5c98b88e1a9dc03 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.data-table','data' => ['id' => 'table_list','url' => route('advertisement.show', 'approved'),'clickToSelect' => true,'fixedColumns' => true,'fixedNumber' => 2,'showExport' => true,'exportFileName' => 'item-list','tableName' => 'items','statusColumn' => 'deleted_at','sortName' => 'updated_at','sortOrder' => 'desc','mobileResponsive' => false,'toolbarId' => 'filters','extra' => ['data-card-view'=>'false','data-row-style'=>'itemRowStyle','data-query-params'=>'itemListQueryParams'],'columns' => $itemCols]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.data-table','data' => ['id' => 'table_list','url' => route('advertisement.show', 'approved'),'clickToSelect' => true,'fixedColumns' => true,'fixedNumber' => 2,'showExport' => true,'exportFileName' => 'item-list','tableName' => 'items','statusColumn' => 'deleted_at','sortName' => 'updated_at','sortOrder' => 'desc','mobileResponsive' => false,'toolbarId' => 'filters','extra' => [
+                                    'data-card-view' => 'false',
+                                    'data-row-style' => 'itemRowStyle',
+                                    'data-query-params' => 'itemListQueryParams',
+                                ],'columns' => $itemCols]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('data-table'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'table_list','url' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('advertisement.show', 'approved')),'click-to-select' => true,'fixed-columns' => true,'fixed-number' => 2,'show-export' => true,'export-file-name' => 'item-list','table-name' => 'items','status-column' => 'deleted_at','sortName' => 'updated_at','sortOrder' => 'desc','mobile-responsive' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(false),'toolbar-id' => 'filters','extra' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(['data-card-view'=>'false','data-row-style'=>'itemRowStyle','data-query-params'=>'itemListQueryParams']),'columns' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($itemCols)]); ?>
+<?php $component->withAttributes(['id' => 'table_list','url' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('advertisement.show', 'approved')),'click-to-select' => true,'fixed-columns' => true,'fixed-number' => 2,'show-export' => true,'export-file-name' => 'item-list','table-name' => 'items','status-column' => 'deleted_at','sortName' => 'updated_at','sortOrder' => 'desc','mobile-responsive' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(false),'toolbar-id' => 'filters','extra' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute([
+                                    'data-card-view' => 'false',
+                                    'data-row-style' => 'itemRowStyle',
+                                    'data-query-params' => 'itemListQueryParams',
+                                ]),'columns' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($itemCols)]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc8463834ba515134d5c98b88e1a9dc03)): ?>
@@ -292,19 +469,27 @@
                             <div class="col-lg-8">
                                 
                                 <div class="ad-preview-main-image mb-3" style="position:relative;">
-                                    <img id="adPreviewMainImg" src="" alt="Advertisement" class="w-100 rounded-3" onerror="onErrorImage(event)">
-                                    <video id="adPreviewMainVideo" src="" controls playsinline class="w-100 rounded-3" style="display:none;max-height:400px;background:#000;"></video>
-                                    <iframe id="adPreviewMainEmbed" src="" frameborder="0" allowfullscreen allow="autoplay; encrypted-media" class="w-100 rounded-3" style="display:none;height:400px;"></iframe>
+                                    <img id="adPreviewMainImg" src="" alt="Advertisement"
+                                        class="w-100 rounded-3" onerror="onErrorImage(event)">
+                                    <video id="adPreviewMainVideo" src="" controls playsinline
+                                        class="w-100 rounded-3"
+                                        style="display:none;max-height:400px;background:#000;"></video>
+                                    <iframe id="adPreviewMainEmbed" src="" frameborder="0" allowfullscreen
+                                        allow="autoplay; encrypted-media" class="w-100 rounded-3"
+                                        style="display:none;height:400px;"></iframe>
                                 </div>
                                 
                                 <div class="ad-preview-gallery position-relative mb-4" id="adPreviewGallery">
-                                    <button type="button" class="ad-gallery-nav ad-gallery-prev" id="adGalleryPrev"><i class="fas fa-chevron-left"></i></button>
+                                    <button type="button" class="ad-gallery-nav ad-gallery-prev" id="adGalleryPrev"><i
+                                            class="fas fa-chevron-left"></i></button>
                                     <div class="ad-gallery-track d-flex gap-2 overflow-hidden" id="adGalleryTrack"></div>
-                                    <button type="button" class="ad-gallery-nav ad-gallery-next" id="adGalleryNext"><i class="fas fa-chevron-right"></i></button>
+                                    <button type="button" class="ad-gallery-nav ad-gallery-next" id="adGalleryNext"><i
+                                            class="fas fa-chevron-right"></i></button>
                                 </div>
                                 
                                 <div id="adPreviewHighlights" class="mb-4 ad-preview-hidden">
-                                    <span class="badge bg-primary border px-3 py-2 mb-3 fs-6"><i class="fas fa-lightbulb me-1"></i> <?php echo e(__('Highlights')); ?></span>
+                                    <span class="badge bg-primary border px-3 py-2 mb-3 fs-6"><i
+                                            class="fas fa-lightbulb me-1"></i> <?php echo e(__('Highlights')); ?></span>
                                     <div class="table-responsive">
                                         <table class="table table-borderless mb-0" id="adHighlightsTable"></table>
                                     </div>
@@ -313,7 +498,8 @@
                                 <div id="adPreviewDescription" class="mb-4 ad-preview-hidden">
                                     <h5 class="fw-bold mb-3"><?php echo e(__('Description')); ?></h5>
                                     <div id="adDescriptionText"></div>
-                                    <a href="javascript:void(0)" id="adDescToggle" class="text-primary ad-preview-hidden"><?php echo e(__('Show more')); ?></a>
+                                    <a href="javascript:void(0)" id="adDescToggle"
+                                        class="text-primary ad-preview-hidden"><?php echo e(__('Show more')); ?></a>
                                 </div>
                             </div>
                             
@@ -348,7 +534,8 @@
                                                 <label class="form-label mandatory"><?php echo e(__('Reason')); ?></label>
                                                 <textarea name="rejected_reason" id="adPreviewRejectReason" class="form-control" rows="2"></textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-primary w-100"><?php echo e(__('Save')); ?></button>
+                                            <button type="submit"
+                                                class="btn btn-primary w-100"><?php echo e(__('Save')); ?></button>
                                         </form>
                                     </div>
                                 </div>
@@ -360,10 +547,13 @@
                                             <i class="fas fa-map-marker-alt text-muted mt-1"></i>
                                             <span id="adPreviewAddress" class="small"></span>
                                         </div>
-                                        <div id="adPreviewMapWrap" class="rounded overflow-hidden ad-preview-hidden" data-map-provider="<?php echo e($mapProvider ?? 'free_api'); ?>" data-google-map-key="<?php echo e($googleMapKey ?? ''); ?>">
+                                        <div id="adPreviewMapWrap" class="rounded overflow-hidden ad-preview-hidden"
+                                            data-map-provider="<?php echo e($mapProvider ?? 'free_api'); ?>"
+                                            data-google-map-key="<?php echo e($googleMapKey ?? ''); ?>">
                                             <div id="adPreviewLeafletMap"></div>
                                         </div>
-                                        <a href="#" id="adPreviewMapLink" target="_blank" class="d-block btn btn-outline-secondary btn-sm w-100 mt-2 ad-preview-hidden">
+                                        <a href="#" id="adPreviewMapLink" target="_blank"
+                                            class="d-block btn btn-outline-secondary btn-sm w-100 mt-2 ad-preview-hidden">
                                             <?php echo e(__('Show on google map')); ?>
 
                                         </a>
@@ -376,7 +566,8 @@
                                             <img id="adPreviewSellerImg" src="" class="rounded-circle">
                                             <div class="flex-grow-1" style="min-width: 0;">
                                                 <h6 class="mb-0 fw-bold text-break" id="adPreviewSellerName"></h6>
-                                                <small class="text-muted text-break d-block" id="adPreviewSellerEmail"></small>
+                                                <small class="text-muted text-break d-block"
+                                                    id="adPreviewSellerEmail"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -396,7 +587,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="create-form" action="<?php echo e(route('advertisement.approval')); ?>" method="POST" data-success-function="updateApprovalSuccess">
+                        <form class="create-form" action="<?php echo e(route('advertisement.approval')); ?>" method="POST"
+                            data-success-function="updateApprovalSuccess">
                             <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-md-12">
@@ -423,9 +615,10 @@
         </div>
     </section>
 
-        
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('advertisement-update')): ?>
-        <div id="bulkStatusModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bulkStatusModalLabel" aria-hidden="true">
+    
+    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('advertisement-update')): ?>
+        <div id="bulkStatusModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bulkStatusModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -451,7 +644,8 @@
 
                         
                         <div id="bulk-rejected-reason-container" class="mb-3" style="display:none;">
-                            <label for="bulk_rejected_reason" class="form-label mandatory"><?php echo e(__('Rejection Reason')); ?></label>
+                            <label for="bulk_rejected_reason"
+                                class="form-label mandatory"><?php echo e(__('Rejection Reason')); ?></label>
                             <textarea id="bulk_rejected_reason" class="form-control" rows="3"
                                 placeholder="<?php echo e(__('Enter reason for rejection...')); ?>"></textarea>
                             <div class="invalid-feedback"><?php echo e(__('Rejection reason is required.')); ?></div>
@@ -462,7 +656,8 @@
                         <div class="table-responsive">
                             <table id="bulk-confirm-table" class="table table-sm table-bordered table-striped"
                                 aria-describedby="bulk-confirm-table-desc">
-                                <caption id="bulk-confirm-table-desc" class="visually-hidden">Selected advertisements</caption>
+                                <caption id="bulk-confirm-table-desc" class="visually-hidden">Selected advertisements
+                                </caption>
                                 <thead class="table-dark">
                                     <tr>
                                         <th>#</th>
@@ -478,9 +673,11 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo e(__('Cancel')); ?></button>
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal"><?php echo e(__('Cancel')); ?></button>
                         <button type="button" class="btn btn-primary" id="btn-confirm-bulk-update">
-                            <span class="spinner-border spinner-border-sm me-1 d-none" id="bulk-update-spinner" role="status"></span>
+                            <span class="spinner-border spinner-border-sm me-1 d-none" id="bulk-update-spinner"
+                                role="status"></span>
                             <i class="fa fa-check me-1" id="bulk-update-icon"></i><?php echo e(__('Confirm & Update')); ?>
 
                         </button>
@@ -488,65 +685,74 @@
                 </div>
             </div>
         </div>
-        <?php endif; ?>
+    <?php endif; ?>
 
-        
-        <div class="modal fade" id="adTypeModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="adTypeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header border-0">
-                        <h5 class="modal-title fw-bold" id="adTypeModalLabel"><?php echo e(__('Select Ads Type')); ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body px-4 pb-2">
-                        <div class="row g-3 align-items-stretch">
-                            <div class="col-lg-6">
-                                <div class="card border ad-type-option selected border-primary flex-grow-1" data-type="normal" style="cursor:pointer;">
-                                    <div class="card-body text-center py-4 d-flex flex-column align-items-center justify-content-center">
-                                        <div class="ad-type-option-icon-bg"><i class="ph-bold ph-briefcase" style="font-size:32px;color:var(--bs-primary);"></i></div>
-                                        <h6 class="fw-bold mb-1"><?php echo e(__('Regular Ad Listing')); ?></h6>
-                                        <small class="text-muted"><?php echo e(__('Standard classified advertisement')); ?></small>
-                                    </div>
+    
+    <div class="modal fade" id="adTypeModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-labelledby="adTypeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold" id="adTypeModalLabel"><?php echo e(__('Select Ads Type')); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 pb-2">
+                    <div class="row g-3 align-items-stretch">
+                        <div class="col-lg-6">
+                            <div class="card border ad-type-option selected border-primary flex-grow-1" data-type="normal"
+                                style="cursor:pointer;">
+                                <div
+                                    class="card-body text-center py-4 d-flex flex-column align-items-center justify-content-center">
+                                    <div class="ad-type-option-icon-bg"><i class="ph-bold ph-briefcase"
+                                            style="font-size:32px;color:var(--bs-primary);"></i></div>
+                                    <h6 class="fw-bold mb-1"><?php echo e(__('Regular Ad Listing')); ?></h6>
+                                    <small class="text-muted"><?php echo e(__('Standard classified advertisement')); ?></small>
                                 </div>
-                                <div class="mt-2 invisible"><small>x</small></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="card border ad-type-option flex-grow-1" data-type="reel" style="cursor:pointer;">
-                                    <div class="card-body text-center py-4 d-flex flex-column align-items-center justify-content-center">
-                                        <div class="ad-type-option-icon-bg"><i class="ph-bold ph-play-circle" style="font-size:32px;color:var(--bs-primary);"></i></div>
-                                        <h6 class="fw-bold mb-1"><?php echo e(__('Video Ad Listing')); ?></h6>
-                                        <small class="text-muted"><?php echo e(__('Create engaging short video advertisements.')); ?></small>
-                                    </div>
+                            <div class="mt-2 invisible"><small>x</small></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card border ad-type-option flex-grow-1" data-type="reel" style="cursor:pointer;">
+                                <div
+                                    class="card-body text-center py-4 d-flex flex-column align-items-center justify-content-center">
+                                    <div class="ad-type-option-icon-bg"><i class="ph-bold ph-play-circle"
+                                            style="font-size:32px;color:var(--bs-primary);"></i></div>
+                                    <h6 class="fw-bold mb-1"><?php echo e(__('Video Ad Listing')); ?></h6>
+                                    <small
+                                        class="text-muted"><?php echo e(__('Create engaging short video advertisements.')); ?></small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer border-0 pt-2">
-                        <button type="button" class="btn btn-primary w-100" id="adTypeNextBtn"><?php echo e(__('Next')); ?></button>
-                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-2">
+                    <button type="button" class="btn btn-primary w-100" id="adTypeNextBtn"><?php echo e(__('Next')); ?></button>
                 </div>
             </div>
         </div>
-        
-        <div class="modal fade" id="reelVideoModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" style="max-width:360px;">
-                <div class="modal-content bg-black border-0">
-                    <div class="modal-header border-0 pb-0">
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body p-0">
-                        <video id="reelVideoModalPlayer" src="" controls playsinline
-                               style="width:100%;max-height:640px;display:block;background:#000;border-radius:0 0 8px 8px;"></video>
-                    </div>
+    </div>
+    
+    <div class="modal fade" id="reelVideoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width:360px;">
+            <div class="modal-content bg-black border-0">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <video id="reelVideoModalPlayer" src="" controls playsinline
+                        style="width:100%;max-height:640px;display:block;background:#000;border-radius:0 0 8px 8px;"></video>
                 </div>
             </div>
         </div>
+    </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script>
         function itemRowStyle(row, index) {
             if (row.is_user_deleted) {
-                return { classes: 'deleted-user-row' };
+                return {
+                    classes: 'deleted-user-row'
+                };
             }
             return {};
         }
@@ -561,16 +767,22 @@
         // delegation (same pattern as common.js) guarantees these always fire.
 
         // "View Custom Fields" / Advertisement Preview button
-        $(document).on('click', '.editdata', function (e) {
+        $(document).on('click', '.editdata', function(e) {
             e.preventDefault();
             let $table = $('#table_list');
             let $row = $(this).closest('tr');
-            let row = $table.bootstrapTable('getData', { useCurrentPage: true })
-                         .find(function(r) { return String(r.id) === String($row.find('td').eq(1).text().trim()); });
+            let row = $table.bootstrapTable('getData', {
+                    useCurrentPage: true
+                })
+                .find(function(r) {
+                    return String(r.id) === String($row.find('td').eq(1).text().trim());
+                });
 
             if (!row) {
                 let rowIndex = $table.find('tbody tr').index($row);
-                let allData = $table.bootstrapTable('getData', { useCurrentPage: true });
+                let allData = $table.bootstrapTable('getData', {
+                    useCurrentPage: true
+                });
                 row = allData[rowIndex];
             }
 
@@ -590,7 +802,8 @@
             }
             let thumbHtml = '';
             $.each(allImages, function(i, src) {
-                thumbHtml += `<img src="${src}" class="ad-gallery-thumb ${i === 0 ? 'active' : ''}" onerror="onErrorImage(event)">`;
+                thumbHtml +=
+                    `<img src="${src}" class="ad-gallery-thumb ${i === 0 ? 'active' : ''}" onerror="onErrorImage(event)">`;
             });
             // Reel thumb in slideshow
             if (row.reel && row.reel.video) {
@@ -608,7 +821,8 @@
             const iv = row.item_video;
             if (iv) {
                 const isFile = iv.video_type === 'file' && iv.video_file;
-                const isLink = ['youtube_link','vimeo_link','other_link'].includes(iv.video_type) && iv.video_link;
+                const isLink = ['youtube_link', 'vimeo_link', 'other_link'].includes(iv.video_type) && iv
+                    .video_link;
                 if (isFile) {
                     thumbHtml += `<div class="ad-gallery-thumb ad-gallery-product-video-thumb position-relative"
                                        data-video-file="${iv.video_file}"
@@ -624,7 +838,7 @@
                                        style="cursor:pointer;background:#1a1a2e;display:inline-flex;align-items:center;justify-content:center;">
                                     <span style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);">
                                         <i class="fa fa-link" style="color:#fff;font-size:14px;"></i>
-                                        <span style="color:#ccc;font-size:9px;margin-top:3px;">${iv.video_type === 'youtube_link' ? '<?php echo e(__("YouTube")); ?>' : iv.video_type === 'vimeo_link' ? '<?php echo e(__("Vimeo")); ?>' : '<?php echo e(__("Video")); ?>'}</span>
+                                        <span style="color:#ccc;font-size:9px;margin-top:3px;">${iv.video_type === 'youtube_link' ? '<?php echo e(__('YouTube')); ?>' : iv.video_type === 'vimeo_link' ? '<?php echo e(__('Vimeo')); ?>' : '<?php echo e(__('Video')); ?>'}</span>
                                     </span>
                                   </div>`;
                 }
@@ -639,41 +853,49 @@
             let currencySymbol = row.currency && row.currency.symbol ? row.currency.symbol : '$';
             let priceDisplay = row.price ? currencySymbol + parseFloat(row.price).toFixed(2) : '';
             if (row.min_salary && row.max_salary) {
-                priceDisplay = currencySymbol + parseFloat(row.min_salary).toFixed(2) + ' - ' + currencySymbol + parseFloat(row.max_salary).toFixed(2);
+                priceDisplay = currencySymbol + parseFloat(row.min_salary).toFixed(2) + ' - ' + currencySymbol +
+                    parseFloat(row.max_salary).toFixed(2);
             }
             $('#adPreviewPrice').text(priceDisplay);
             $('#adPreviewAdId').text('Ad id #' + row.id);
 
             // Meta info
             let metaHtml = '';
-            if (row.published_at || row.created_at) metaHtml += `<span><i class="far fa-calendar-alt me-1"></i> ${trans("Listed on")}: ${row.published_at || row.created_at}</span>`;
-            if (row.clicks !== undefined) metaHtml += `<span><i class="far fa-eye me-1"></i> ${trans("Views")}: ${row.clicks || 0}</span>`;
-            if (row.likes !== undefined) metaHtml += `<span><i class="far fa-heart me-1"></i> ${trans("Favorites")}: ${row.likes || 0}</span>`;
+            if (row.published_at || row.created_at) metaHtml +=
+                `<span><i class="far fa-calendar-alt me-1"></i> ${trans("Listed on")}: ${row.published_at || row.created_at}</span>`;
+            if (row.clicks !== undefined) metaHtml +=
+                `<span><i class="far fa-eye me-1"></i> ${trans("Views")}: ${row.clicks || 0}</span>`;
+            if (row.likes !== undefined) metaHtml +=
+                `<span><i class="far fa-heart me-1"></i> ${trans("Favorites")}: ${row.likes || 0}</span>`;
             $('#adPreviewMeta').html(metaHtml);
 
             // Action buttons
             let actionsHtml = '';
             if (!row.is_user_deleted) {
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('advertisement-update')): ?>
-                    actionsHtml += `<a href="${"<?php echo e(route('advertisement.edit', ':id')); ?>".replace(':id', row.id)}" class="btn btn-primary flex-fill"><?php echo e(__('Edit')); ?></a>`;
+                    actionsHtml +=
+                        `<a href="${"<?php echo e(route('advertisement.edit', ':id')); ?>".replace(':id', row.id)}" class="btn btn-primary flex-fill"><?php echo e(__('Edit')); ?></a>`;
                 <?php endif; ?>
             }
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('advertisement-delete')): ?>
-                actionsHtml += `<button type="button" class="btn flex-fill ad-preview-delete-btn" data-id="${row.id}"><?php echo e(__('Delete')); ?></button>`;
+                actionsHtml +=
+                    `<button type="button" class="btn flex-fill ad-preview-delete-btn" data-id="${row.id}"><?php echo e(__('Delete')); ?></button>`;
             <?php endif; ?>
             $('#adPreviewActions').html(actionsHtml);
 
             // --- Change Status ---
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('advertisement-update')): ?>
-            if (!row.is_user_deleted && row.status !== 'sold out' && row.status !== 'expired' && !row.is_admin_listing) {
-                $('#adPreviewStatusCard').show();
-                $('#adPreviewStatusId').val(row.id);
-                $('#adPreviewStatusSelect').val(row.status === 'approved' ? 'approved' : row.status).trigger('change');
-                $('#adPreviewRejectReason').val(row.rejected_reason || '');
-                adPreviewToggleRejectReason();
-            } else {
-                $('#adPreviewStatusCard').hide();
-            }
+                if (!row.is_user_deleted && row.status !== 'sold out' && row.status !== 'expired' && !row
+                    .is_admin_listing) {
+                    $('#adPreviewStatusCard').show();
+                    $('#adPreviewStatusId').val(row.id);
+                    $('#adPreviewStatusSelect').val(row.status === 'approved' ? 'approved' : row.status).trigger(
+                        'change');
+                    $('#adPreviewRejectReason').val(row.rejected_reason || '');
+                    adPreviewToggleRejectReason();
+                } else {
+                    $('#adPreviewStatusCard').hide();
+                }
             <?php endif; ?>
 
             // --- Highlights (Custom Fields) ---
@@ -684,23 +906,29 @@
 
                     if (field.type === 'fileinput') {
                         // Controller converts fileinput value to a plain string URL
-                        let fileUrl = (typeof field.value === 'string') ? field.value : (field.value?.value || '');
+                        let fileUrl = (typeof field.value === 'string') ? field.value : (field.value
+                            ?.value || '');
                         if (fileUrl) {
                             if (fileUrl.match(/\.(jpg|jpeg|png|svg)$/i)) {
-                                val = `<img src="${fileUrl}" alt="" class="rounded ad-highlight-file-img" onerror="onErrorImage(event)">`;
+                                val =
+                                    `<img src="${fileUrl}" alt="" class="rounded ad-highlight-file-img" onerror="onErrorImage(event)">`;
                             } else {
-                                val = `<a href="${fileUrl}" target="_blank" class="text-primary">${trans("View File")}</a>`;
+                                val =
+                                    `<a href="${fileUrl}" target="_blank" class="text-primary">${trans("View File")}</a>`;
                             }
                         }
                     } else {
                         // For other types, value is an object { value: "..." } or null
-                        let rawVal = (typeof field.value === 'string') ? field.value : (field.value?.value || '');
+                        let rawVal = (typeof field.value === 'string') ? field.value : (field.value
+                            ?.value || '');
                         val = rawVal ? $('<span>').text(rawVal).html() : '';
                     }
 
                     // Only show fields that have a value
                     if (val) {
-                        let fieldIcon = field.image ? `<span class="ad-highlight-icon-wrap me-2"><img src="${field.image}" class="ad-highlight-icon" onerror="onErrorImage(event)"></span>` : '';
+                        let fieldIcon = field.image ?
+                            `<span class="ad-highlight-icon-wrap me-2"><img src="${field.image}" class="ad-highlight-icon" onerror="onErrorImage(event)"></span>` :
+                            '';
                         highlightHtml += `<tr>
                             <td class="fw-semibold text-nowrap ps-0 ad-highlight-name">${fieldIcon}${$('<span>').text(field.name).html()}</td>
                             <td class="text-muted px-2">:</td>
@@ -722,7 +950,9 @@
             if (row.description) {
                 let desc = $('<span>').text(row.description).html();
                 let shortDesc = desc.length > 300 ? desc.substring(0, 300) + '...' : desc;
-                $('#adDescriptionText').html(`<p class="text-muted mb-0" id="adDescContent" style="white-space: pre-wrap;">${shortDesc}</p>`);
+                $('#adDescriptionText').html(
+                    `<p class="text-muted mb-0" id="adDescContent" style="white-space: pre-wrap;">${shortDesc}</p>`
+                );
                 $('#adDescriptionText').data('full', desc).data('short', shortDesc).data('expanded', false);
                 $('#adDescToggle').toggle(desc.length > 300);
                 $('#adPreviewDescription').show();
@@ -736,9 +966,13 @@
                 $('#adPreviewAddress').text(fullAddress);
                 if (row.latitude && row.longitude) {
                     $('#adPreviewMapWrap').show();
-                    $('#adPreviewMapLink').attr('href', `https://www.google.com/maps?q=${row.latitude},${row.longitude}`).show();
+                    $('#adPreviewMapLink').attr('href',
+                        `https://www.google.com/maps?q=${row.latitude},${row.longitude}`).show();
                     // Leaflet map will be initialized after modal is shown (needs visible container)
-                    window._adPreviewMapCoords = { lat: parseFloat(row.latitude), lng: parseFloat(row.longitude) };
+                    window._adPreviewMapCoords = {
+                        lat: parseFloat(row.latitude),
+                        lng: parseFloat(row.longitude)
+                    };
                 } else {
                     $('#adPreviewMapWrap').hide();
                     $('#adPreviewMapLink').hide();
@@ -752,13 +986,21 @@
 
             // --- Seller ---
             if (row.user) {
-                $('#adPreviewSellerImg').attr('src', row.user.profile || '').attr('data-name', row.user.name || '').attr('onerror','onErrorUserAvatar(event, 40)');
+                $('#adPreviewSellerImg').attr('src', row.user.profile || '').attr('data-name', row.user.name || '')
+                    .attr('onerror', 'onErrorUserAvatar(event, 40)');
                 let sellerNameHtml = $('<span>').text(row.user.name || '').html();
                 if (row.is_user_deleted) {
-                    sellerNameHtml += ' <span class="badge bg-danger" style="font-size: 0.7em;"><?php echo e(__("Deleted")); ?></span>';
-                    $('#adPreviewSellerImg').css({'filter': 'grayscale(100%)', 'opacity': '0.6'});
+                    sellerNameHtml +=
+                        ' <span class="badge bg-danger" style="font-size: 0.7em;"><?php echo e(__('Deleted')); ?></span>';
+                    $('#adPreviewSellerImg').css({
+                        'filter': 'grayscale(100%)',
+                        'opacity': '0.6'
+                    });
                 } else {
-                    $('#adPreviewSellerImg').css({'filter': '', 'opacity': ''});
+                    $('#adPreviewSellerImg').css({
+                        'filter': '',
+                        'opacity': ''
+                    });
                 }
                 $('#adPreviewSellerName').html(sellerNameHtml);
                 $('#adPreviewSellerEmail').text(row.user.email || '');
@@ -772,7 +1014,7 @@
 
         // Initialize map after modal is fully shown
         let adPreviewMapInitialized = false;
-        $('#editModal').on('shown.bs.modal', function () {
+        $('#editModal').on('shown.bs.modal', function() {
             if (window._adPreviewMapCoords) {
                 let coords = window._adPreviewMapCoords;
                 let wrap = document.getElementById('adPreviewMapWrap');
@@ -793,7 +1035,7 @@
             }
         });
         // Clean up map + video when modal is hidden
-        $('#editModal').on('hidden.bs.modal', function () {
+        $('#editModal').on('hidden.bs.modal', function() {
             if (adPreviewMapInitialized) {
                 window.mapUtils.removeMap('adPreviewLeafletMap');
                 adPreviewMapInitialized = false;
@@ -815,16 +1057,20 @@
 
             if ($(this).hasClass('ad-gallery-reel-thumb')) {
                 const videoSrc = $(this).data('video');
-                $img.hide(); $embed.hide();
+                $img.hide();
+                $embed.hide();
                 $vid.attr('src', videoSrc).show()[0].play();
             } else if ($(this).hasClass('ad-gallery-product-video-thumb')) {
                 const videoSrc = $(this).data('video-file');
-                $img.hide(); $embed.hide();
+                $img.hide();
+                $embed.hide();
                 $vid.attr('src', videoSrc).show()[0].play();
             } else if ($(this).hasClass('ad-gallery-product-link-thumb')) {
                 const link = $(this).data('video-link');
                 const type = $(this).data('video-type');
-                $vid[0].pause(); $vid.attr('src', '').hide(); $img.hide();
+                $vid[0].pause();
+                $vid.attr('src', '').hide();
+                $img.hide();
                 let embedSrc = link;
                 if (type === 'youtube_link') {
                     const ytId = link.match(/(?:v=|youtu\.be\/|shorts\/)([^&?\/]+)/)?.[1];
@@ -841,7 +1087,8 @@
                     $(this).removeClass('active');
                 }
             } else {
-                $vid[0].pause(); $vid.attr('src', '').hide();
+                $vid[0].pause();
+                $vid.attr('src', '').hide();
                 $embed.attr('src', '').hide();
                 $img.attr('src', $(this).attr('src')).show();
             }
@@ -888,9 +1135,13 @@
             let thumbLeft = $thumb[0].offsetLeft;
             let thumbWidth = $thumb.outerWidth();
             if (thumbLeft < trackLeft) {
-                $track.animate({ scrollLeft: thumbLeft }, 200);
+                $track.animate({
+                    scrollLeft: thumbLeft
+                }, 200);
             } else if (thumbLeft + thumbWidth > trackLeft + trackWidth) {
-                $track.animate({ scrollLeft: thumbLeft + thumbWidth - trackWidth }, 200);
+                $track.animate({
+                    scrollLeft: thumbLeft + thumbWidth - trackWidth
+                }, 200);
             }
         }
 
@@ -923,7 +1174,9 @@
             $form.data('submitting', true);
             let $btn = $form.find('button[type="submit"]');
             let originalHtml = $btn.html();
-            $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span><?php echo e(__('Saving...')); ?>');
+            $btn.prop('disabled', true).html(
+                '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span><?php echo e(__('Saving...')); ?>'
+            );
             let formData = $form.serialize();
             $.ajax({
                 url: "<?php echo e(route('advertisement.approval')); ?>",
@@ -963,13 +1216,17 @@
                     $.ajax({
                         url: deleteUrl,
                         type: 'DELETE',
-                        data: { _token: '<?php echo e(csrf_token()); ?>' },
+                        data: {
+                            _token: '<?php echo e(csrf_token()); ?>'
+                        },
                         success: function(response) {
                             $('#table_list').bootstrapTable('refresh');
-                            showSuccessToast(response.message || "<?php echo e(__('Deleted successfully')); ?>");
+                            showSuccessToast(response.message ||
+                                "<?php echo e(__('Deleted successfully')); ?>");
                         },
                         error: function(xhr) {
-                            showErrorToast(xhr.responseJSON?.message || "<?php echo e(__('Something went wrong')); ?>");
+                            showErrorToast(xhr.responseJSON?.message ||
+                                "<?php echo e(__('Something went wrong')); ?>");
                         }
                     });
                 } else {
@@ -980,14 +1237,18 @@
         });
 
         // "Update Status" button
-        $(document).on('click', '.edit-status', function (e) {
+        $(document).on('click', '.edit-status', function(e) {
             e.preventDefault();
             let $table = $('#table_list');
             let $row = $(this).closest('tr');
             let rowId = $(this).attr('id');
 
-            let allData = $table.bootstrapTable('getData', { useCurrentPage: true });
-            let row = allData.find(function(r) { return String(r.id) === String(rowId); });
+            let allData = $table.bootstrapTable('getData', {
+                useCurrentPage: true
+            });
+            let row = allData.find(function(r) {
+                return String(r.id) === String(rowId);
+            });
 
             if (!row) {
                 let rowIndex = $table.find('tbody tr').index($row);
@@ -1033,10 +1294,11 @@
                     'sold out': 'bg-secondary',
                     'expired': 'bg-secondary',
                     'inactive': 'bg-secondary',
-                }[row.status] || 'bg-secondary';
+                } [row.status] || 'bg-secondary';
 
                 const userName = (row.user && row.user.name) ? $('<div>').text(row.user.name).html() : '-';
-                const categoryName = (row.category && row.category.name) ? $('<div>').text(row.category.name).html() : '-';
+                const categoryName = (row.category && row.category.name) ? $('<div>').text(row.category.name)
+                    .html() : '-';
                 const itemName = row.name ? $('<div>').text(row.name).html() : '-';
 
                 html += `<tr>
@@ -1099,7 +1361,7 @@
             const ids = rows.map(r => r.id);
 
             $.ajax({
-                url: '<?php echo e(route("advertisement.bulk-approval")); ?>',
+                url: '<?php echo e(route('advertisement.bulk-approval')); ?>',
                 method: 'POST',
                 data: {
                     _token: '<?php echo e(csrf_token()); ?>',
@@ -1116,9 +1378,9 @@
                     showSuccessToast(response.message || '<?php echo e(__('Status updated successfully')); ?>');
                 },
                 error: function(xhr) {
-                    const msg = xhr.responseJSON && xhr.responseJSON.message
-                        ? xhr.responseJSON.message
-                        : '<?php echo e(__('Something went wrong')); ?>';
+                    const msg = xhr.responseJSON && xhr.responseJSON.message ?
+                        xhr.responseJSON.message :
+                        '<?php echo e(__('Something went wrong')); ?>';
                     showErrorToast(msg);
                 },
                 complete: function() {
@@ -1260,14 +1522,15 @@
             window.resettingBulkSelection = false;
 
             // Bootstrap Table check/uncheck events (user-driven)
-            $('#table_list').on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function() {
-                if (window.resettingBulkSelection) return; // ignore programmatic reset events
-                // Short timeout so bootstrap-table can finish updating its internal _data state
-                setTimeout(function() {
-                    window.bulkSelectedRows = $('#table_list').bootstrapTable('getSelections');
-                    syncBulkSelectionUI();
-                }, 50);
-            });
+            $('#table_list').on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table',
+                function() {
+                    if (window.resettingBulkSelection) return; // ignore programmatic reset events
+                    // Short timeout so bootstrap-table can finish updating its internal _data state
+                    setTimeout(function() {
+                        window.bulkSelectedRows = $('#table_list').bootstrapTable('getSelections');
+                        syncBulkSelectionUI();
+                    }, 50);
+                });
 
             // ---- End Bulk action button handlers ----
 
@@ -1385,7 +1648,8 @@
 
             // Function to update button active states
             function updateButtonStates(activeButton) {
-                $('#btn-active-ads, #btn-requested-ads, #btn-all-ads, #btn-admin-ads, #btn-favorite-ads').removeClass('active');
+                $('#btn-active-ads, #btn-requested-ads, #btn-all-ads, #btn-admin-ads, #btn-favorite-ads')
+                    .removeClass('active');
                 $(activeButton).addClass('active');
             }
 
@@ -1654,7 +1918,7 @@
                 const filterString = mergedFilters ? JSON.stringify(mergedFilters) : JSON.stringify({
                     posted_by: 'admin'
                 });
-                
+
 
                 $('#table_list').bootstrapTable('refresh', {
                     query: {
@@ -1662,9 +1926,15 @@
                     }
                 });
 
-                setTimeout(function() { restoreFilterValues(storedFilters); }, 100);
-                setTimeout(function() { restoreFilterValues(storedFilters); }, 500);
-                setTimeout(function() { restoreFilterValues(storedFilters); }, 1000);
+                setTimeout(function() {
+                    restoreFilterValues(storedFilters);
+                }, 100);
+                setTimeout(function() {
+                    restoreFilterValues(storedFilters);
+                }, 500);
+                setTimeout(function() {
+                    restoreFilterValues(storedFilters);
+                }, 1000);
             });
 
             // Favorite Ads - only ads favourited by at least one user
@@ -1688,9 +1958,15 @@
                     }
                 });
 
-                setTimeout(function() { restoreFilterValues(storedFilters); }, 100);
-                setTimeout(function() { restoreFilterValues(storedFilters); }, 500);
-                setTimeout(function() { restoreFilterValues(storedFilters); }, 1000);
+                setTimeout(function() {
+                    restoreFilterValues(storedFilters);
+                }, 100);
+                setTimeout(function() {
+                    restoreFilterValues(storedFilters);
+                }, 500);
+                setTimeout(function() {
+                    restoreFilterValues(storedFilters);
+                }, 1000);
             });
 
             // Auto-select Favorite Ads filter when arriving with ?filter=favorite
@@ -1944,14 +2220,14 @@
             }
 
             // Handle More Filters collapse chevron rotation
-            $('#moreFiltersCollapse').on('show.bs.collapse', function () {
+            $('#moreFiltersCollapse').on('show.bs.collapse', function() {
                 $('#more-filters-chevron').css('transform', 'rotate(180deg)');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#more-filters-chevron').css('transform', 'rotate(0deg)');
             });
 
             // Handle Reset Filters button
-            $('#btn-reset-filters').on('click', function () {
+            $('#btn-reset-filters').on('click', function() {
                 // Reset Category (handles select2)
                 const $cat = $('#p_category');
                 if ($cat.length) {
@@ -1965,8 +2241,8 @@
                 $('#filter_featured_premium').val('');
                 // Reset Country, State, City
                 $('#filter_country_item_test').val('');
-                $('#filter_state_item').html('<option value=""><?php echo e(__("All")); ?></option>').val('');
-                $('#filter_city_item').html('<option value=""><?php echo e(__("All")); ?></option>').val('');
+                $('#filter_state_item').html('<option value=""><?php echo e(__('All')); ?></option>').val('');
+                $('#filter_city_item').html('<option value=""><?php echo e(__('All')); ?></option>').val('');
 
                 window.intendedFilters = {
                     country: '',
@@ -2068,7 +2344,8 @@
                 updateMoreFiltersBadge();
 
                 // Auto-expand More Filters if any additional filter is pre-applied
-                if ($('#filter_ad_type').val() || $('#filter_featured_premium').val() || $('#filter_country_item_test').val()) {
+                if ($('#filter_ad_type').val() || $('#filter_featured_premium').val() || $(
+                        '#filter_country_item_test').val()) {
                     const collapseEl = document.getElementById('moreFiltersCollapse');
                     if (collapseEl && window.bootstrap && bootstrap.Collapse) {
                         bootstrap.Collapse.getOrCreateInstance(collapseEl).show();
@@ -2111,7 +2388,9 @@
                 syncBulkSelectionUI();
 
                 // Release the flag after a safe delay (longer than the 50 ms listener timeout)
-                setTimeout(function() { window.resettingBulkSelection = false; }, 150);
+                setTimeout(function() {
+                    window.resettingBulkSelection = false;
+                }, 150);
             }
 
             // post-body fires after table rows are rendered (initial load, pagination, filter, refresh)
@@ -2135,7 +2414,8 @@
                 e.stopPropagation();
                 const $sw = $(this);
                 const tableElement = $sw.closest('table');
-                const url = tableElement.data('custom-status-change-url') || window.baseurl + 'common/change-status';
+                const url = tableElement.data('custom-status-change-url') || window.baseurl +
+                    'common/change-status';
                 storeFilterValues(); // snapshot current filters into window.intendedFilters
                 ajaxRequest('PUT', url, {
                     id: $sw.attr('id'),
@@ -2166,7 +2446,8 @@
                         // only non-admin sold-out/expired rows explain why.
                         if (!row.is_admin_listing) {
                             $cb.closest('td').addClass('not-selectable-cell').css('cursor', 'not-allowed')
-                                .attr('data-tip', '<?php echo e(__('Cannot update sold out or expired advertisements')); ?>');
+                                .attr('data-tip',
+                                    '<?php echo e(__('Cannot update sold out or expired advertisements')); ?>');
                         } else {
                             $cb.closest('td').css('cursor', 'not-allowed');
                         }
@@ -2206,7 +2487,7 @@
         // to body (select2 default) so it isn't clipped by the narrow filter
         // column; custom.css's `.select2-container:has(> .select2-selection)`
         // rule already scopes the width fix to the inline control only.
-        $(function () {
+        $(function() {
             const $cat = $('#p_category');
             if ($cat.length) {
                 if ($cat.hasClass('select2-hidden-accessible')) {
@@ -2222,12 +2503,12 @@
         });
 
         // Ad Type Modal
-        $(document).on('click', '.ad-type-option', function () {
+        $(document).on('click', '.ad-type-option', function() {
             $('.ad-type-option').removeClass('selected border-primary');
             $(this).addClass('selected border-primary');
         });
 
-        $('#adTypeNextBtn').on('click', function () {
+        $('#adTypeNextBtn').on('click', function() {
             const type = $('.ad-type-option.selected').data('type') || 'normal';
             window.location.href = '<?php echo e(route('advertisement.create')); ?>?item_type=' + type;
         });

@@ -7,7 +7,6 @@
     <div class="page-title">
         <div class="row align-items-center">
             <div class="col-12 col-md-6">
-                <h4 class="mb-0">@yield('title')</h4>
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-end">
                 @if (!empty($category))
@@ -15,20 +14,6 @@
                     @can('category-create')
                         <a class="btn btn-primary me-2" href="{{ route('category.create', ['id' => $category->id]) }}">+ {{__("Add Subcategory")}} - /{{ $category->name }} </a>
                     @endcanany
-                @else
-                    <div class="d-flex flex-wrap gap-2">
-                        @can('category-create')
-                            <a class="btn btn-primary" href="{{ route('category.create') }}">+ {{__("Add Category")}} </a>
-                            <a href="{{ route('category.bulk-upload') }}" class="btn btn-success">
-                                <i class="fas fa-upload"></i> <span class="d-none d-sm-inline">{{__("Bulk Upload")}}</span><span class="d-sm-none">{{__("Upload")}}</span>
-                            </a>
-                        @endcan
-                        @can('category-update')
-                            <a href="{{ route('category.bulk-update') }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> <span class="d-none d-sm-inline">{{__("Bulk Update")}}</span><span class="d-sm-none">{{__("Update")}}</span>
-                            </a>
-                        @endcan
-                    </div>
                 @endif
             </div>
         </div>
@@ -42,9 +27,22 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <div class="row">
-                            <div class="text-right col-md-12">
-                                <a href="{{ route('category.order') }}">+ {{__("Set Order of Categories")}} </a>
+                        <div class="wngez-list-card-head">
+                            <div class="wngez-list-title">
+                                <span><i class="ph ph-sliders-horizontal"></i></span>
+                                <div>
+                                    <h2>{{ __('Set Order of Categories') }}</h2>
+                                    <p>{{ __('Drag and drop to change the order of categories.') }}</p>
+                                </div>
+                            </div>
+                            <div class="wngez-list-actions">
+                                @can('category-create')
+                                    <a class="btn btn-primary" href="{{ route('category.create') }}"><i class="ph ph-plus"></i>{{ __('Add Category') }}</a>
+                                    <a href="{{ route('category.bulk-upload') }}" class="btn btn-success"><i class="ph ph-upload-simple"></i>{{ __('Bulk Upload') }}</a>
+                                @endcan
+                                @can('category-update')
+                                    <a href="{{ route('category.bulk-update') }}" class="btn btn-warning"><i class="ph ph-note-pencil"></i>{{ __('Bulk Update') }}</a>
+                                @endcan
                             </div>
                         </div>
                         @php

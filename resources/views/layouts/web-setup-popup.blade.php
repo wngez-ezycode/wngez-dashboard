@@ -22,7 +22,7 @@
             </div>
             <h4 style="font-weight: 700; color: #0f172a; margin-bottom: 12px; font-size: 24px;">Web Setup Configuration</h4>
             <p style="color: #64748b; font-size: 15px; line-height: 1.6; margin-bottom: 30px;">
-                To enable all system features in this version (2.14.0), please configure your web setup status. Do you have a web portal configured for eClassify?
+                To enable all system features in this version (2.14.0), please configure your web setup status. Do you have a web portal configured for WngeZ?
             </p>
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <button type="button" id="btn-setup-yes" class="btn btn-primary" style="padding: 12px 24px; font-weight: 600; border-radius: 12px; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -41,7 +41,7 @@
             </div>
             <h4 style="font-weight: 700; color: #0f172a; margin-bottom: 12px; font-size: 24px;">Configure Web URL</h4>
             <p style="color: #64748b; font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
-                Please enter the URL of your eClassify web portal. This is required for deep-linking and web integration.
+                Please enter the URL of your WngeZ web portal. This is required for deep-linking and web integration.
             </p>
             <form id="web-setup-form" onsubmit="return false;">
                 <div style="margin-bottom: 24px; text-align: left;">

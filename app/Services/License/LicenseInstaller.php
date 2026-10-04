@@ -16,7 +16,7 @@ class LicenseInstaller
     {
     }
 
-    // eClassify plugins (Cashfree, PayU India) validate against the
+    // Product-specific plugins (Cashfree, PayU India) validate against the
     // validator's own per-product history endpoint — same pattern every
     // other WRTeam product uses ({slug}_validator?purchase_code=&domain_url=),
     // not the generic signed plugin-license API (that system was reverted).

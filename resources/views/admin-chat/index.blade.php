@@ -436,6 +436,13 @@
                 if (itemOfferId > 0) refreshChatOnNotification(itemOfferId);
             });
 
+            // Resilient real-time polling: ensures chats update seamlessly even without push permissions
+            setInterval(function() {
+                if (currentChatId && !messagesLoading && !document.hidden) {
+                    loadMessages(currentChatId, true);
+                }
+            }, 4000);
+
             // Listen for window/tab becoming visible again after being minimized/hidden.
             // Only refetch after a real away period (not a quick alt-tab or opening
             // a link in a new tab), otherwise the chat list/messages flicker on every click.

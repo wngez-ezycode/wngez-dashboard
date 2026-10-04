@@ -270,8 +270,11 @@ class NotificationService
                 return ['error' => true, 'message' => 'Firebase service file not configured'];
             }
 
+            $privateServiceFile = storage_path('app/firebase_service.json');
             $disk = config('filesystems.default');
-            if (in_array($disk, ['local', 'public'])) {
+            if ($file === 'firebase_service.json' && file_exists($privateServiceFile)) {
+                $filePath = $privateServiceFile;
+            } elseif (in_array($disk, ['local', 'public'])) {
                 $filePath = Storage::disk($disk)->path($file);
             } else {
                 $fileContent = Storage::disk($disk)->get($file);

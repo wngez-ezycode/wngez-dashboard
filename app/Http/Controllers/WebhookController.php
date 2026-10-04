@@ -330,7 +330,7 @@ class WebhookController extends Controller
             }
 
             // --- Extract order info ---
-            // eClassify persists PhonePe's own orderId in payment_transactions.order_id,
+            // The marketplace persists PhonePe's own orderId in payment_transactions.order_id,
             // so the payload's orderId is the correct key to look up the transaction.
             $payload = $jsonInput['payload'] ?? [];
             $orderId = $payload['orderId'] ?? null;

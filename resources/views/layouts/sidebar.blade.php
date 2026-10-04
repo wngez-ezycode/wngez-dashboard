@@ -23,18 +23,21 @@
                         <span class="menu-item">{{ __('Dashboard') }}</span>
                     </a>
                 </li>
-                @canany(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete','category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
-                    'custom-field-create', 'custom-field-update', 'custom-field-delete','feature-section-list', 'feature-section-create', 'feature-section-update',
-                    'feature-section-delete','slider-list', 'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list', 'home-screen-section-update',
-                    'tip-list', 'tip-create', 'tip-update', 'tip-delete',
-                    'banner-ad-list', 'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])
+                @canany(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete',
+                    'category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
+                    'custom-field-create', 'custom-field-update', 'custom-field-delete', 'feature-section-list',
+                    'feature-section-create', 'feature-section-update', 'feature-section-delete', 'slider-list',
+                    'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list',
+                    'home-screen-section-update', 'tip-list', 'tip-create', 'tip-update', 'tip-delete', 'banner-ad-list',
+                    'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-cards"></i>
                             <span class="menu-item">{{ __('Ads Listing') }}</span>
                         </a>
                         <ul class="submenu" style="padding-inline-start: 0rem">
-                           @canany(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete'])
+                            @canany(['advertisement-list', 'advertisement-create', 'advertisement-update',
+                                'advertisement-delete'])
                                 <li class="submenu-item">
                                     <a href="{{ route('advertisement.index') }}">{{ __('All Ads') }}</a>
                                 </li>
@@ -44,7 +47,8 @@
                                     <a href="{{ route('category.index') }}">{{ __('Categories') }}</a>
                                 </li>
                             @endcanany
-                            @canany(['custom-field-list', 'custom-field-create', 'custom-field-update', 'custom-field-delete'])
+                            @canany(['custom-field-list', 'custom-field-create', 'custom-field-update',
+                                'custom-field-delete'])
                                 <li class="submenu-item">
                                     <a href="{{ route('custom-fields.index') }}">{{ __('Custom Fields') }}</a>
                                 </li>
@@ -54,11 +58,13 @@
                 @endcanany
 
 
-                @canany(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete','category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
-                    'custom-field-create', 'custom-field-update', 'custom-field-delete','feature-section-list', 'feature-section-create', 'feature-section-update',
-                    'feature-section-delete','slider-list', 'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list', 'home-screen-section-update',
-                    'tip-list', 'tip-create', 'tip-update', 'tip-delete',
-                    'banner-ad-list', 'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])
+                @canany(['advertisement-list', 'advertisement-create', 'advertisement-update', 'advertisement-delete',
+                    'category-list', 'category-create', 'category-update', 'category-delete', 'custom-field-list',
+                    'custom-field-create', 'custom-field-update', 'custom-field-delete', 'feature-section-list',
+                    'feature-section-create', 'feature-section-update', 'feature-section-delete', 'slider-list',
+                    'slider-create', 'slider-update', 'slider-delete', 'home-screen-section-list',
+                    'home-screen-section-update', 'tip-list', 'tip-create', 'tip-update', 'tip-delete', 'banner-ad-list',
+                    'banner-ad-create', 'banner-ad-update', 'banner-ad-delete'])
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-layout"></i>
@@ -95,7 +101,8 @@
                     </li>
                 @endcanany
 
-                @canany(['admin-chat-manage', 'chat-template-list', 'chat-template-create', 'chat-template-update', 'chat-template-delete'])
+                @canany(['admin-chat-manage', 'chat-template-list', 'chat-template-create', 'chat-template-update',
+                    'chat-template-delete'])
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-chats-circle"></i>
@@ -107,7 +114,8 @@
                                     <a href="{{ route('admin-chat.index') }}">{{ __('Chats') }}</a>
                                 </li>
                             @endcan
-                            @canany(['chat-template-list', 'chat-template-create', 'chat-template-update', 'chat-template-delete'])
+                            @canany(['chat-template-list', 'chat-template-create', 'chat-template-update',
+                                'chat-template-delete'])
                                 <li class="submenu-item">
                                     <a href="{{ route('chat-templates.index') }}">{{ __('Chat Templates') }}</a>
                                 </li>
@@ -125,7 +133,7 @@
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-credit-card"></i>
                             <span class="menu-item">{{ __('Package Management') }}</span>
-                        </a>    
+                        </a>
                         <ul class="submenu" style="padding-inline-start: 0rem">
                             @canany(['advertisement-listing-package-list', 'advertisement-listing-package-create',
                                 'advertisement-listing-package-update', 'advertisement-listing-package-delete',
@@ -142,7 +150,8 @@
                             @endcan
                             @can('payment-transactions-list')
                                 <li class="submenu-item">
-                                    <a href="{{ route('package.payment-transactions.index') }}">{{ __('Payment Transactions') }}</a>
+                                    <a
+                                        href="{{ route('package.payment-transactions.index') }}">{{ __('Payment Transactions') }}</a>
                                 </li>
                             @endcan
                             @can('payment-transactions-list')
@@ -168,7 +177,8 @@
                             @canany(['seller-verification-field-list', 'seller-verification-field-create',
                                 'seller-verification-field-update', 'seller-verification-field-delete'])
                                 <li class="submenu-item">
-                                    <a href="{{ route('seller-verification.verification-field') }}">{{ __('Verification Fields') }}</a>
+                                    <a
+                                        href="{{ route('seller-verification.verification-field') }}">{{ __('Verification Fields') }}</a>
                                 </li>
                             @endcanany
                             @canany(['seller-verification-request-list', 'seller-verification-request-create',
@@ -190,8 +200,8 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['blog-list', 'blog-create', 'blog-update', 'blog-delete',
-                    'faq-create', 'faq-list', 'faq-update',  'faq-delete'])
+                @canany(['blog-list', 'blog-create', 'blog-update', 'blog-delete', 'faq-create', 'faq-list',
+                    'faq-update', 'faq-delete'])
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-article"></i>
@@ -218,8 +228,8 @@
 
 
                 @canany(['role-list', 'role-create', 'role-update', 'role-delete', 'staff-list', 'staff-create',
-                    'staff-update', 'staff-delete', 'customer-list', 'customer-create', 'customer-update', 'customer-delete',
-                    'user-queries-list'])
+                    'staff-update', 'staff-delete', 'customer-list', 'customer-create', 'customer-update',
+                    'customer-delete', 'user-queries-list'])
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-users-three"></i>
@@ -251,7 +261,8 @@
                 @endcanany
                 @canany(['currency-list', 'currency-create', 'currency-update', 'currency-delete', 'country-list',
                     'country-create', 'country-update', 'country-delete', 'state-list', 'state-create', 'state-update',
-                    'state-delete', 'city-list', 'city-create', 'city-update', 'city-delete','area-create', 'area-list', 'area-update', 'area-delete'])
+                    'state-delete', 'city-list', 'city-create', 'city-update', 'city-delete', 'area-create', 'area-list',
+                    'area-update', 'area-delete'])
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-globe-hemisphere-east"></i>
@@ -286,14 +297,16 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['report-reason-list', 'report-reason-create', 'report-reason-update', 'report-reason-delete', 'user-reports-list'])
+                @canany(['report-reason-list', 'report-reason-create', 'report-reason-update', 'report-reason-delete',
+                    'user-reports-list'])
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="ph ph-flag"></i>
                             <span class="menu-item">{{ __('Reports') }}</span>
                         </a>
                         <ul class="submenu" style="padding-inline-start: 0rem">
-                            @canany(['report-reason-list', 'report-reason-create', 'report-reason-update', 'report-reason-delete'])
+                            @canany(['report-reason-list', 'report-reason-create', 'report-reason-update',
+                                'report-reason-delete'])
                                 <li class="submenu-item">
                                     <a href="{{ route('report-reasons.index') }}">{{ __('Report Reasons') }}</a>
                                 </li>
@@ -316,9 +329,9 @@
                 @endcanany
 
                 @can('settings-update')
-                <div class="sidebar-new-title">{{ __('Settings') }}</div>
+                    <div class="sidebar-new-title">{{ __('Settings') }}</div>
                 @endcan
-                @can('settings-update')
+                {{-- @can('settings-update')
                     @if (\Illuminate\Support\Facades\Auth::user()->hasRole('Super Admin'))
                         <li class="sidebar-item">
                             <a href="{{ route('plugin-manager.index') }}" class='sidebar-link'>
@@ -327,7 +340,7 @@
                             </a>
                         </li>
                     @endif
-                @endcan
+                @endcan --}}
                 @can('settings-update')
                     <li class="sidebar-item">
                         <a href="{{ route('settings.index') }}" class='sidebar-link'>
@@ -336,7 +349,7 @@
                         </a>
                     </li>
                 @endcan
-               @can('settings-update')
+                {{-- @can('settings-update')
                     @if (\Illuminate\Support\Facades\Auth::user()->hasRole('Super Admin'))
                         <li class="sidebar-item">
                             <a href="{{ route('system-update.index') }}" class='sidebar-link'>
@@ -345,7 +358,7 @@
                             </a>
                         </li>
                     @endif
-                @endcan
+                @endcan --}}
             </ul>
         </div>
     </div>

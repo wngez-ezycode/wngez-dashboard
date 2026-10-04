@@ -296,38 +296,16 @@ class LanguageController extends Controller
     public function setLanguage($languageCode)
     {
         $language = Language::where('code', $languageCode)->where('status', true)->first();
-
-        Session::put('locale', $language->code);
-        Session::put('language', $language);
-        app()->setLocale($language->code);
+        if ($language) {
+            Session::put('locale', $language->code);
+            Session::put('language', $language);
+            Session::put('is_rtl', (bool)$language->rtl);
+            app()->setLocale($language->code);
+        }
 
         return redirect()->back();
     }
 
-    // public function setDefaultLanguage(Request $request)
-    // {
-    //     ResponseService::noPermissionThenSendJson('settings-update');
-
-    //     $request->validate([
-    //         'default_language' => 'required|exists:languages,code',
-    //     ]);
-
-    //     // Save default globally
-    //     Setting::updateOrCreate(
-    //         ['name' => 'default_language'],
-    //         ['value' => $request->default_language, 'type' => 'string']
-    //     );
-    //     $language = Language::where('code', $request->default_language)->firstOrFail();
-    //     Cache::forget('global_default_language');
-    //     // Update current session too
-    //     Session::put('locale', $request->default_language);
-    //     Session::put('language', $language);
-    //     Session::put('Default_langauge', $request->default_language);
-    //     app()->setLocale($request->default_language);
-
-    //     return redirect()->back()
-    //         ->with('success', __('Default language updated successfully.'));
-    // }
     public function setDefaultLanguage(Request $request)
     {
         ResponseService::noPermissionThenSendJson('settings-update');
@@ -347,10 +325,11 @@ class LanguageController extends Controller
 
         // 3. Update current user's session so the UI reflects the change immediately
         $language = Language::where('code', $request->default_language)->firstOrFail();
-        
+
         Session::put('locale', $request->default_language);
         Session::put('language', $language);
-        
+        Session::put('is_rtl', (bool)$language->rtl);
+
         // Clear the CachingService cache if it has one (e.g., system_settings)
         // Cache::forget('system_settings'); 
 
@@ -416,7 +395,7 @@ class LanguageController extends Controller
             }
         }
         File::put($jsonFile, json_encode($targetContent, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        $enLabels = json_decode($jsonContent, true);
+        $enLabels = $targetContent;
 
         return view('settings.languageedit', compact('enLabels', 'language', 'type'));
     }
@@ -511,7 +490,6 @@ class LanguageController extends Controller
                 $fileName,
                 ['Content-Type' => 'application/json; charset=utf-8']
             );
-
         } catch (Throwable $th) {
             ResponseService::logErrorResponse($th, 'Language Controller --> downloadJson');
             abort(500, 'Failed to download language file.');

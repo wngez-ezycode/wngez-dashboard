@@ -1,35 +1,62 @@
 @php
-    // $lang = Session::get('language');
-    // dd($lang);
-    
+    $currentLocale = app()->getLocale();
+    $currentLang = Session::get('language') ?? \App\Models\Language::where('code', $currentLocale)->first();
+    $isRtl = ($currentLang && $currentLang->rtl) || $currentLocale === 'ar' || Session::get('is_rtl', false);
 @endphp
 
-@if (empty($lang) || !$lang->rtl)
+@if (!$isRtl)
     {{-- NON RTL CSS --}}
     <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/pages/otherpages.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/wngez-dashboard.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('assets/css/wngez-dashboard.css') }}?v={{ filemtime(public_path('assets/css/wngez-dashboard.css')) }}" />
 @else
     {{-- RTL CSS --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/main/rtl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/pages/otherpages_rtl.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/wngez-dashboard.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('assets/css/wngez-dashboard.css') }}?v={{ filemtime(public_path('assets/css/wngez-dashboard.css')) }}" />
+    <style>
+        body,
+        html,
+        .sidebar-wrapper,
+        .navbar,
+        .btn,
+        .form-control,
+        .form-select,
+        table,
+        .modal,
+        .card,
+        .dropdown-menu {
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif !important;
+        }
+    </style>
 @endif
 {{-- Bootstrap Switch --}}
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-switch-button.min.css') }}">
 
-{{-- Phosphor Icons (local) --}}
+{{-- Phosphor Icons (local + CDN fallback) --}}
 <link rel="stylesheet" href="{{ asset('assets/libs/phosphor-icons/regular/style.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/libs/phosphor-icons/bold/style.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/libs/phosphor-icons/fill/style.css') }}">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+{{-- Bootstrap Icons --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 
 @php
     use App\Services\CachingService;
     $adminColorDB = CachingService::getSystemSettings('admin_primary_color');
-    $adminPrimaryColor =  !empty($adminColorDB) ? $adminColorDB : '#0878F9';
-    
+    $adminPrimaryColor = !empty($adminColorDB) ? $adminColorDB : '#0878F9';
+
     // Convert hex to RGB for rgba usage
     $hex = str_replace('#', '', $adminPrimaryColor);
     $r = hexdec(substr($hex, 0, 2));
@@ -121,7 +148,8 @@
             if (mutation.addedNodes) {
                 mutation.addedNodes.forEach((node) => {
                     // Check if the added node is an image element
-                    if (node instanceof HTMLImageElement && !node.hasAttribute('data-no-auto-error')) {
+                    if (node instanceof HTMLImageElement && !node.hasAttribute(
+                            'data-no-auto-error')) {
                         node.addEventListener('error', () => {
                             handleImageError(node);
                         });
@@ -144,6 +172,6 @@
     };
 
     const onErrorImageSidebarHorizontalLogo = (e) => {
-        e.target.src = "{{$company_logo}}";
+        e.target.src = "{{ $company_logo }}";
     };
 </script>

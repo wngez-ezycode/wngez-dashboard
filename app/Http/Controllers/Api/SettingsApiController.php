@@ -24,6 +24,7 @@ use App\Services\ResponseService;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use JsonException;
 use Throwable;
@@ -31,6 +32,20 @@ use Throwable;
 /** @tags Settings */
 class SettingsApiController extends BaseApiController
 {
+    public function subscribeNewsletter(Request $request)
+    {
+        $data = $request->validate(['email' => ['required', 'email', 'max:255']]);
+        $email = mb_strtolower(trim($data['email']));
+
+        DB::table('newsletter_subscribers')->insertOrIgnore([
+            'email' => $email,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json(['error' => false, 'message' => 'Subscribed successfully']);
+    }
+
     /** Get System Settings */
     public function getSystemSettings(Request $request)
     {
