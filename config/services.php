@@ -36,4 +36,12 @@ return [
         'api_url' => env('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite'),
     ],
 
+    'whatsapp_cloud' => [
+        'access_token' => env('WHATSAPP_CLOUD_ACCESS_TOKEN'),
+        'phone_number_id' => env('WHATSAPP_CLOUD_PHONE_NUMBER_ID'),
+        'api_version' => env('WHATSAPP_CLOUD_API_VERSION', 'v25.0'),
+        'otp_template' => env('WHATSAPP_CLOUD_OTP_TEMPLATE', 'waitmeyah_otp'),
+        'otp_language' => env('WHATSAPP_CLOUD_OTP_LANGUAGE', 'ar'),
+    ],
+
 ];

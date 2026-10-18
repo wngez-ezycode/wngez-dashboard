@@ -42,6 +42,10 @@
                                     {{ ($settings['otp_service_provider'] ?? '') == 'twilio' ? 'selected' : '' }}>
                                     {{ __('Twilio') }}
                                 </option>
+                                <option value="whatsapp"
+                                    {{ ($settings['otp_service_provider'] ?? '') == 'whatsapp' ? 'selected' : '' }}>
+                                    WhatsApp
+                                </option>
                                 <option value="2factor"
                                     {{ ($settings['otp_service_provider'] ?? '') == '2factor' ? 'selected' : '' }}>
                                     {{ __('2Factor') }}

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\UserFcmToken;
 use App\Services\NotificationService;
 use App\Services\ResponseService;
+use App\Services\WhatsappService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -339,6 +340,29 @@ class AuthApiController extends BaseApiController
 
             $provider = Setting::where('name', 'otp_service_provider')->value('value');
 
+            if ($provider === 'whatsapp') {
+                $otp = (string) random_int(100000, 999999);
+                $result = app(WhatsappService::class)->sendOtp($toNumber, $otp);
+
+                if (! ($result['success'] ?? false)) {
+                    DB::rollBack();
+                    return ResponseService::errorResponse($result['error'] ?? __('Failed to send OTP.'));
+                }
+
+                NumberOtp::updateOrCreate(
+                    ['number' => $number],
+                    [
+                        'otp' => Hash::make($otp),
+                        'session_id' => null,
+                        'expire_at' => now()->addMinutes(10),
+                        'attempts' => 0,
+                    ]
+                );
+
+                DB::commit();
+                return ResponseService::successResponse(__('OTP sent successfully.'));
+            }
+
             if ($provider === 'twilio') {
 
                 $twilioSettings = Setting::whereIn('name', [
@@ -455,7 +479,7 @@ class AuthApiController extends BaseApiController
             }
 
 
-            if ($provider === 'twilio') {
+            if (in_array($provider, ['twilio', 'whatsapp'], true)) {
 
                 if (now()->isAfter($otpRecord->expire_at)) {
                     DB::rollBack();
