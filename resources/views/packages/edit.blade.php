@@ -511,8 +511,8 @@
                     </div>
                 </div> --}}
 
-                <div class="col-md-12 text-end mb-3">
-                    <input type="submit" class="btn btn-primary" value="{{ __('Save and Back') }}">
+                <div class="col-md-12 text-end mt-3 mb-4">
+                    <input type="submit" class="btn btn-primary btn-lg px-4" value="{{ __('Save and Back') }}">
                 </div>
             </div>
         </form>

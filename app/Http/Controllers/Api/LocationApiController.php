@@ -253,6 +253,41 @@ class LocationApiController extends BaseApiController
                         ->get();
 
                     if ($cities->isEmpty()) {
+                        try {
+                            $osmResponse = Http::withHeaders([
+                                'User-Agent' => 'eClassifyApp/1.0',
+                            ])->timeout(6)->get('https://nominatim.openstreetmap.org/search', [
+                                'format' => 'json',
+                                'q' => $search,
+                                'accept-language' => $lang ?? 'ar',
+                                'limit' => 10,
+                            ]);
+
+                            if ($osmResponse->successful()) {
+                                $results = collect($osmResponse->json());
+                                if ($results->isNotEmpty()) {
+                                    return ResponseService::successResponse(__('Matching locations found'), $results->map(function ($item) {
+                                        return [
+                                            'city_id' => null,
+                                            'city' => $item['name'] ?? '',
+                                            'city_translation' => $item['name'] ?? '',
+                                            'state' => '',
+                                            'state_translation' => '',
+                                            'country' => '',
+                                            'country_translation' => '',
+                                            'area' => '',
+                                            'area_translation' => '',
+                                            'latitude' => (float) $item['lat'],
+                                            'longitude' => (float) $item['lon'],
+                                            'description' => $item['display_name'] ?? $item['name'],
+                                        ];
+                                    }));
+                                }
+                            }
+                        } catch (\Throwable $th) {
+                            // ignore and continue
+                        }
+
                         return ResponseService::errorResponse(__('No matching location found'));
                     }
 
@@ -356,6 +391,44 @@ class LocationApiController extends BaseApiController
                         ->first();
 
                     if (! $closestCity) {
+                        try {
+                            $osmResponse = Http::withHeaders([
+                                'User-Agent' => 'eClassifyApp/1.0',
+                            ])->timeout(6)->get('https://nominatim.openstreetmap.org/reverse', [
+                                'format' => 'json',
+                                'lat' => $lat,
+                                'lon' => $lng,
+                                'accept-language' => $lang ?? 'ar',
+                            ]);
+
+                            if ($osmResponse->successful()) {
+                                $data = $osmResponse->json();
+                                $address = $data['address'] ?? [];
+                                $cityName = $address['city'] ?? $address['town'] ?? $address['village'] ?? $address['suburb'] ?? $address['county'] ?? $address['state'] ?? 'City';
+                                $stateName = $address['state'] ?? $address['governorate'] ?? $address['region'] ?? '';
+                                $countryName = $address['country'] ?? '';
+                                $areaName = $address['neighbourhood'] ?? $address['suburb'] ?? $address['road'] ?? '';
+
+                                return ResponseService::successResponse(__('Location fetched from OpenStreetMap'), [
+                                    'city_id' => null,
+                                    'city' => $cityName,
+                                    'city_translation' => $cityName,
+                                    'state' => $stateName,
+                                    'state_translation' => $stateName,
+                                    'country' => $countryName,
+                                    'country_translation' => $countryName,
+                                    'area_id' => null,
+                                    'area' => $areaName,
+                                    'area_translation' => $areaName,
+                                    'formatted_address' => $data['display_name'] ?? "{$cityName}, {$countryName}",
+                                    'latitude' => (float) ($data['lat'] ?? $lat),
+                                    'longitude' => (float) ($data['lon'] ?? $lng),
+                                ]);
+                            }
+                        } catch (\Throwable $th) {
+                            // ignore and continue
+                        }
+
                         return ResponseService::errorResponse(__('No nearby city found'));
                     }
 

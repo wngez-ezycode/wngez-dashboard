@@ -129,14 +129,11 @@ class PackageApiController extends BaseApiController
                     }
                 }
 
-                $isRenew = $request->has('is_renew') && $request->is_renew == 1;
-                $packages->where(function ($query) use ($categoryIdsToMatch, $isRenew) {
+                $packages->where(function ($query) use ($categoryIdsToMatch) {
                     $query->whereHas('package_categories', function ($q) use ($categoryIdsToMatch) {
                         $q->whereIn('category_id', $categoryIdsToMatch);
                     })
-                    ->when($isRenew, function ($q) {
-                        $q->orWhere('is_global',1);
-                    });
+                    ->orWhere('is_global', 1);
                 });
             }else{
                 $packages->where('is_global',1);

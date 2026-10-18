@@ -785,5 +785,21 @@
   "unauthorised": "Unauthorized",
   "doNotHavePermission": "You do not have permission to access this resource. Please log in or contact the administrator.",
   "ok": "Ok",
-  "setPriceAndOffer":"Set your price and send an offer to the seller."
+  "setPriceAndOffer": "Set your price and send an offer to the seller.",
+  "noNotificationsSubtitle": "When you receive new notifications, they will appear here.",
+  "notificationsSubtitle": "All alerts and notifications regarding your account",
+  "transactionsSubtitle": "History and details of previous payments and subscriptions",
+  "noTransactionsSubtitle": "When you complete any payment or subscription, details will appear here.",
+  "reviewsSubtitle": "Reviews and ratings received and given on advertisements",
+  "noReviewsSubtitle": "You haven't reviewed any ads yet. After dealing with a seller, share your experience.",
+  "jobApplicationsSubtitle": "Track and manage job applications and candidates",
+  "favoritesSubtitle": "Advertisements and video reels you saved to your favorites",
+  "noFavoritesSubtitle": "You haven't saved any ads to favorites yet. Browse ads and save what you like.",
+  "adListingPlanSubtitle": "Choose the right plan to display your ads across the platform",
+  "noListingPlanSubtitle": "When you purchase an ad plan, your plan details will appear here.",
+  "featuredAdPlanSubtitle": "Gain maximum visibility with featured advertising plans",
+  "noFeaturedPlanSubtitle": "When you purchase a featured ad plan, your details will appear here.",
+  "noAdvertisementSubtitle": "You haven't posted any ads yet. Start now and post your first ad.",
+  "noChatsSubtitle": "When you contact sellers about any ad, your conversations will appear here.",
+  "metaDetails": "Meta Details (SEO)"
 }

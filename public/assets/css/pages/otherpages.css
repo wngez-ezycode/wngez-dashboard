@@ -483,10 +483,10 @@ strong {
 
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
     padding: 20px;
     color: #919BAE;
     display: flex;
@@ -496,7 +496,7 @@ strong {
     overflow-y: auto;
     -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, .04);
     box-shadow: 0 2px 3px rgba(0, 0, 0, .04);
-    z-index: 3;
+    z-index: 1;
 }
 
 .jvectormap-container .jvectormap-marker.jvectormap-element {

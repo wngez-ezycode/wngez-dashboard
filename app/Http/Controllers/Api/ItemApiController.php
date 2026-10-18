@@ -532,6 +532,191 @@ class ItemApiController extends BaseApiController
     }
 
     /**
+     * Get Similar Items with automatic hierarchical fallback:
+     * 1. Same category & same price range (±35%)
+     * 2. Same type or brand (custom fields / title keywords / sibling categories)
+     * 3. Same category (or category family)
+     * 4. Other categories (popular / latest)
+     */
+    public function getSimilarItems(Request $request)
+    {
+        try {
+            $limit = (int) ($request->limit ?? 8);
+            $itemId = $request->item_id ?? $request->id;
+            $slug = $request->slug;
+            $categoryId = $request->category_id;
+
+            $targetItem = null;
+            if ($itemId) {
+                $targetItem = Item::with('category', 'item_custom_field_values.custom_field')->find($itemId);
+            } elseif ($slug) {
+                $targetItem = Item::with('category', 'item_custom_field_values.custom_field')->where('slug', $slug)->first();
+            }
+
+            $excludedId = $targetItem?->id ?? ($request->excluded_item_id ?: 0);
+            $targetCatId = $targetItem?->category_id ?? $categoryId;
+            $targetPrice = $targetItem?->price ? (float) $targetItem->price : null;
+
+            $collectedIds = $excludedId ? [(int) $excludedId] : [];
+            $similarItems = collect();
+
+            $fetchQuery = function () use (&$collectedIds) {
+                return Item::with([
+                    'category:id,name,is_job_category',
+                    'translations',
+                    'featured_items',
+                    'currency',
+                    'gallery_images:id,image,item_id,is_default',
+                ])
+                    ->where('status', 'approved')
+                    ->getNonExpiredItems()
+                    ->when(! empty($collectedIds), fn ($q) => $q->whereNotIn('items.id', $collectedIds));
+            };
+
+            // 1. Priority 1: Same category & same price range (+-35%)
+            if ($targetCatId && $targetPrice && $targetPrice > 0 && $similarItems->count() < $limit) {
+                $minPrice = $targetPrice * 0.65;
+                $maxPrice = $targetPrice * 1.35;
+                $needed = $limit - $similarItems->count();
+
+                $p1Items = $fetchQuery()
+                    ->where('category_id', $targetCatId)
+                    ->whereBetween('price', [$minPrice, $maxPrice])
+                    ->orderByRaw('ABS(price - ?) ASC', [$targetPrice])
+                    ->take($needed)
+                    ->get();
+
+                foreach ($p1Items as $item) {
+                    $similarItems->push($item);
+                    $collectedIds[] = (int) $item->id;
+                }
+            }
+
+            // 2. Priority 2: Same type or brand (custom fields / title keywords / sibling categories)
+            if ($similarItems->count() < $limit) {
+                $needed = $limit - $similarItems->count();
+
+                $brandOrTypeValues = [];
+                if ($targetItem && $targetItem->item_custom_field_values) {
+                    foreach ($targetItem->item_custom_field_values as $cfv) {
+                        $fieldName = strtolower(optional($cfv->custom_field)->name ?? '');
+                        if (str_contains($fieldName, 'brand') || str_contains($fieldName, 'make') || str_contains($fieldName, 'type') || str_contains($fieldName, 'model')) {
+                            $val = trim((string) $cfv->value, ' "[]');
+                            if (! empty($val)) {
+                                $brandOrTypeValues[] = $val;
+                            }
+                        }
+                    }
+                }
+
+                $titleWords = [];
+                if ($targetItem?->name) {
+                    $words = preg_split('/[\s,\-_]+/', $targetItem->name);
+                    foreach ($words as $w) {
+                        $w = trim($w);
+                        if (mb_strlen($w) >= 3 && ! in_array(strtolower($w), ['the', 'for', 'and', 'with', 'new', 'slim', 'disc', 'edition', '1tb', 'bundle', 'ultra', 'plus', 'pro', 'max'])) {
+                            $titleWords[] = $w;
+                        }
+                    }
+                }
+
+                $parentCatId = $targetItem?->category?->parent_category_id;
+                $siblingCatIds = $parentCatId
+                    ? Category::where('parent_category_id', $parentCatId)->where('id', '!=', $targetCatId)->pluck('id')->toArray()
+                    : [];
+
+                $p2Query = $fetchQuery()->where(function ($query) use ($brandOrTypeValues, $titleWords, $siblingCatIds) {
+                    $hasCondition = false;
+
+                    if (! empty($brandOrTypeValues)) {
+                        $hasCondition = true;
+                        $query->orWhereHas('item_custom_field_values', function ($cfq) use ($brandOrTypeValues) {
+                            $cfq->where(function ($sub) use ($brandOrTypeValues) {
+                                foreach ($brandOrTypeValues as $val) {
+                                    $sub->orWhere('value', 'LIKE', "%{$val}%");
+                                }
+                            });
+                        });
+                    }
+
+                    if (! empty($titleWords)) {
+                        $hasCondition = true;
+                        $query->orWhere(function ($tq) use ($titleWords) {
+                            foreach (array_slice($titleWords, 0, 3) as $word) {
+                                $tq->orWhere('name', 'LIKE', "%{$word}%");
+                            }
+                        });
+                    }
+
+                    if (! empty($siblingCatIds)) {
+                        $hasCondition = true;
+                        $query->orWhereIn('category_id', $siblingCatIds);
+                    }
+
+                    if (! $hasCondition) {
+                        $query->whereRaw('1=0');
+                    }
+                });
+
+                if ($targetPrice && $targetPrice > 0) {
+                    $p2Query->orderByRaw('ABS(price - ?) ASC', [$targetPrice]);
+                } else {
+                    $p2Query->orderByRaw('COALESCE(published_at, created_at) DESC');
+                }
+
+                $p2Items = $p2Query->take($needed)->get();
+                foreach ($p2Items as $item) {
+                    $similarItems->push($item);
+                    $collectedIds[] = (int) $item->id;
+                }
+            }
+
+            // 3. Priority 3: Same category
+            if ($targetCatId && $similarItems->count() < $limit) {
+                $needed = $limit - $similarItems->count();
+
+                $p3Items = $fetchQuery()
+                    ->where('category_id', $targetCatId)
+                    ->orderByRaw('COALESCE(published_at, created_at) DESC')
+                    ->take($needed)
+                    ->get();
+
+                foreach ($p3Items as $item) {
+                    $similarItems->push($item);
+                    $collectedIds[] = (int) $item->id;
+                }
+            }
+
+            // 4. Priority 4: Other categories (popular / closest price / latest)
+            if ($similarItems->count() < $limit) {
+                $needed = $limit - $similarItems->count();
+
+                $p4Query = $fetchQuery();
+                if ($targetPrice && $targetPrice > 0) {
+                    $p4Query->orderByRaw('ABS(COALESCE(price, 0) - ?) ASC', [$targetPrice]);
+                } else {
+                    $p4Query->orderBy('clicks', 'DESC')->orderByRaw('COALESCE(published_at, created_at) DESC');
+                }
+
+                $p4Items = $p4Query->take($needed)->get();
+                foreach ($p4Items as $item) {
+                    $similarItems->push($item);
+                    $collectedIds[] = (int) $item->id;
+                }
+            }
+
+            return ResponseService::successResponse(
+                __('Similar Advertisements Fetched Successfully'),
+                (new ItemApiResource($similarItems))->toArray($request)
+            );
+        } catch (\Throwable $th) {
+            ResponseService::logErrorResponse($th, 'ItemApiController -> getSimilarItems');
+
+            return ResponseService::errorResponse(__('Failed to fetch similar items'));
+        }
+    }
+
+    /**
      * Get Item List (lightweight) / Get Item Detail when `id` passed
      */
     public function getItemList(Request $request)

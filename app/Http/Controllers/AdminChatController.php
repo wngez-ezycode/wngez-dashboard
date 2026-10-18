@@ -9,7 +9,6 @@ use App\Models\Chat;
 use App\Models\Item;
 use App\Models\ItemOffer;
 use App\Models\Setting;
-use App\Models\User;
 use App\Models\UserFcmToken;
 use App\Services\CachingService;
 use App\Services\CurrencyFormatterService;
@@ -72,7 +71,7 @@ final class AdminChatController extends Controller
      */
     private function getAdminUser()
     {
-        return User::role('Super Admin')->first();
+        return Auth::user();
     }
 
     /**
@@ -142,10 +141,6 @@ final class AdminChatController extends Controller
             $query = Item::where('user_id', $adminUser->id)
                 ->where('status', 'approved')
                 ->with('currency')
-                ->whereHas('item_offers', function ($q) {
-                    $q->whereNull('deleted_by_seller_at')
-                      ->whereHas('buyer', fn($b) => $b->whereNull('deleted_at'));
-                })
                 ->with(['item_offers' => function ($q) use ($adminUser) {
                     $q->whereNull('deleted_by_seller_at')
                       ->whereHas('buyer', fn($b) => $b->whereNull('deleted_at'))

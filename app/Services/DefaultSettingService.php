@@ -7,7 +7,7 @@ class DefaultSettingService {
     public static function get() {
         $SYSTEM_VERSION = "3.1.0";
         return [
-            ['name' => 'currency_symbol', 'value' => '$', 'type' => 'string'],
+            ['name' => 'currency_symbol', 'value' => 'ج.م', 'type' => 'string'],
             ['name' => 'ios_version', 'value' => '1.0.0', 'type' => 'string'],
             ['name' => 'default_language', 'value' => 'en', 'type' => 'string'],
             ['name' => 'force_update', 'value' => '0', 'type' => 'string'],
@@ -98,8 +98,8 @@ class DefaultSettingService {
             ['name' => 'watermark_position', 'value' => 'center', 'type' => 'string'],
             ['name' => 'watermark_rotation', 'value' => '-30', 'type' => 'string'],
 
-            ['name' => 'currency_iso_code', 'value' => 'USD', 'type' => 'string'],
-             ['name' => 'currency_symbol_position', 'value' => 'left', 'type' => 'string'],
+            ['name' => 'currency_iso_code', 'value' => 'EGP', 'type' => 'string'],
+             ['name' => 'currency_symbol_position', 'value' => 'right', 'type' => 'string'],
 
             // --- Currency Formatting Settings ---
             ['name' => 'decimal_places', 'value' => '2', 'type' => 'integer'],

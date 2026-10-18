@@ -180,6 +180,7 @@ Route::get('get-reels', [ReelApiController::class, 'getReels']);
 
 /* Item Module */
 Route::get('get-item-list', [ItemApiController::class, 'getItemList']);
+Route::get('get-similar-items', [ItemApiController::class, 'getSimilarItems']);
 Route::get('get-item-slug', [ItemApiController::class, 'getItemSlugs']);
 
 /* Blog Module */
