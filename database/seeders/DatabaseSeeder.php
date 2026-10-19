@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ArabicLanguageSeeder::class,
             CategoryDataSeeder::class,
             SliderDataSeeder::class,
+            HomePageContentSeeder::class,
         ]);
     }
 }

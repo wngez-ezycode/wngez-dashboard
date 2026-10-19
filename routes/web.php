@@ -477,6 +477,7 @@ Route::group(['middleware' => ['auth', 'language']], static function () {
     Route::group(['prefix' => 'home-screen-sections'], static function () {
         Route::get('/', [HomeScreenSectionController::class, 'index'])->name('home-screen-section.index');
         Route::post('/toggle', [HomeScreenSectionController::class, 'toggleSection'])->name('home-screen-section.toggle');
+        Route::put('/{section}/content', [HomeScreenSectionController::class, 'updateContent'])->name('home-screen-section.content.update');
         Route::get('/popular-categories/list', [HomeScreenSectionController::class, 'popularCategoriesList'])->name('home-screen-section.popular-categories.list');
         Route::post('/popular-categories', [HomeScreenSectionController::class, 'storePopularCategory'])->name('home-screen-section.popular-categories.store');
         Route::delete('/popular-categories/{id}', [HomeScreenSectionController::class, 'deletePopularCategory'])->name('home-screen-section.popular-categories.delete');

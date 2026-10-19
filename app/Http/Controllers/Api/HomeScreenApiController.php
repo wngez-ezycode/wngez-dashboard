@@ -18,7 +18,7 @@ class HomeScreenApiController extends BaseApiController
         try {
             $sections = HomeScreenSection::active()
                 ->orderBy('sequence')
-                ->get(['id','section_type', 'sequence']);
+                ->get(['id', 'section_type', 'sequence', 'content']);
 
             ResponseService::successResponse('Data Fetched Successfully', [
                 'sections' => $sections,

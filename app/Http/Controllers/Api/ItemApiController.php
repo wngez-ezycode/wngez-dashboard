@@ -802,7 +802,7 @@ class ItemApiController extends BaseApiController
             $limit = (int) ($request->limit ?? 10);
             $page = (int) ($request->page ?? 1);
 
-            $baseQuery = Item::with('category:id,is_job_category', 'translations', 'featured_items', 'currency', 'gallery_images:id,image,item_id,is_default')
+            $baseQuery = Item::with('category:id,name,slug,is_job_category', 'category.translations', 'translations', 'featured_items', 'currency', 'gallery_images:id,image,item_id,is_default')
                 ->where('status', 'approved')
                 ->getNonExpiredItems()
                 ->when($request->user_id, function ($query) use ($request) {

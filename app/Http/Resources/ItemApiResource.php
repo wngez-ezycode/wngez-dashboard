@@ -231,6 +231,13 @@ class ItemApiResource extends ResourceCollection
                     'slug' => $item->slug,
                     'user_id' => $item->user_id,
                     'image' => $item->image,
+                    'gallery_images' => $item->relationLoaded('gallery_images')
+                        ? $item->gallery_images->pluck('image')->filter()->values()
+                        : [],
+                    'category' => $item->relationLoaded('category') && $item->category ? [
+                        'name' => $item->category->translated_name ?? $item->category->name,
+                        'slug' => $item->category->slug,
+                    ] : null,
                     'is_feature' => $isFeature,
                     'formatted_salary_range' => $formattedSalary,
                     'formatted_price' => $formattedPrice,

@@ -27,7 +27,17 @@
                             'slider' => __('Slider'),
                             'popular_categories' => __('Popular Categories'),
                             'featured_section' => __('Featured Section'),
-                            'all_ads' => __('All Advertisement')
+                            'all_ads' => __('All Advertisement'),
+                            'hero' => __('Hero'),
+                            'browse_categories' => __('Browse Categories'),
+                            'featured_ads' => __('Featured Ads'),
+                            'promotional_banners' => __('Promotional Banners'),
+                            'featured_categories' => __('Featured Categories'),
+                            'how_it_works' => __('How It Works'),
+                            'ads_by_city' => __('Ads By City'),
+                            'download_app' => __('Download App'),
+                            'why_us' => __('Why Us'),
+                            'newsletter' => __('Newsletter'),
                         ];
                     @endphp
                     @foreach ($sections as $section)
@@ -41,6 +51,52 @@
                                                 data-id="{{ $section->id }}"
                                                 {{ $section->is_active ? 'checked' : '' }}>
                                         </div>
+                                    @endcan
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        {{-- Website home content --}}
+        <div class="card">
+            <div class="card-header">
+                <h4>{{ __('Website Home Content') }}</h4>
+                <p class="text-muted mb-0">{{ __('Edit the Arabic and English text, links, images and repeated items for every section.') }}</p>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="home-content-accordion">
+                    @foreach ($sections as $section)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-{{ $section->id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#content-{{ $section->id }}">
+                                    {{ $sectionLabels[$section->section_type] ?? str($section->section_type)->headline() }}
+                                </button>
+                            </h2>
+                            <div id="content-{{ $section->id }}" class="accordion-collapse collapse"
+                                data-bs-parent="#home-content-accordion">
+                                <div class="accordion-body">
+                                    @can('home-screen-section-update')
+                                        <form method="POST" action="{{ route('home-screen-section.content.update', $section) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <label class="form-label">{{ __('Arabic Content (JSON)') }}</label>
+                                                    <textarea name="content_ar" class="form-control font-monospace" rows="14" dir="ltr" required>{{ json_encode(data_get($section->content, 'ar', new stdClass()), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</textarea>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label class="form-label">{{ __('English Content (JSON)') }}</label>
+                                                    <textarea name="content_en" class="form-control font-monospace" rows="14" dir="ltr" required>{{ json_encode(data_get($section->content, 'en', new stdClass()), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</textarea>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mt-3">{{ __('Save Content') }}</button>
+                                        </form>
+                                    @else
+                                        <pre class="mb-0">{{ json_encode($section->content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</pre>
                                     @endcan
                                 </div>
                             </div>

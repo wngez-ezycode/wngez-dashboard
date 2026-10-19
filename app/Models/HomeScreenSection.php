@@ -13,10 +13,12 @@ class HomeScreenSection extends Model
         'section_type',
         'is_active',
         'sequence',
+        'content',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'content' => 'array',
     ];
 
     public function scopeActive($query)

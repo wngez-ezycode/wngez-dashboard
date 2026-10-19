@@ -102,6 +102,26 @@ class HomeScreenSectionController extends Controller
         }
     }
 
+    public function updateContent(Request $request, HomeScreenSection $section)
+    {
+        ResponseService::noPermissionThenSendJson('home-screen-section-update');
+
+        $validated = $request->validate([
+            'content_ar' => ['required', 'json'],
+            'content_en' => ['required', 'json'],
+        ]);
+
+        $section->update([
+            'content' => [
+                'ar' => json_decode($validated['content_ar'], true, 512, JSON_THROW_ON_ERROR),
+                'en' => json_decode($validated['content_en'], true, 512, JSON_THROW_ON_ERROR),
+            ],
+        ]);
+
+        return redirect()->route('home-screen-section.index')
+            ->with('success', __('Section content updated successfully'));
+    }
+
     public function storePopularCategory(Request $request)
     {
         ResponseService::noPermissionThenSendJson('home-screen-section-update');

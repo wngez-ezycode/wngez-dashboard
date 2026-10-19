@@ -648,3 +648,118 @@
 #20 /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
 #21 {main}
 "} 
+[2026-10-19 11:39:44] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 11:39:56] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 11:41:45] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 11:41:46] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 11:42:07] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 11:42:36] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 11:42:54] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 12:35:01] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:17:25] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:17:32] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:17:54] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:18:31] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:20:23] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:20:28] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:45:40] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:45:42] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 13:48:55] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 14:05:02] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 14:05:10] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 14:05:13] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 14:05:17] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 14:52:04] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
+[2026-10-19 14:52:11] local.ERROR: API Controller -> getHomeScreen SQLSTATE[42S22]: Column not found: 1054 Unknown column 'content' in 'field list' (Connection: mysql, Host: 127.0.0.1, Port: 3306, Database: eclassify-3-1-0, SQL: select `id`, `section_type`, `sequence`, `content` from `home_screen_sections` where `is_active` = 1 order by `sequence` asc)---> /home/mohamed/Videos/dashboard/بسم الله/codecanyon-MsYYrWvY-eclassify-classified-buy-and-sell-marketplace-flutter-app-with-laravel-admin-panel/dashboard/vendor/laravel/framework/src/Illuminate/Database/Connection.php At Line : 838
+
+GET : http://127.0.0.1:8000/api/get-home-screen
+Token : 
+Params :   
