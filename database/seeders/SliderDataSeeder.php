@@ -66,11 +66,11 @@ class SliderDataSeeder extends Seeder
             ],
         ];
 
-        // Clear existing sliders and re-insert fresh
-        Slider::truncate();
-
         foreach ($sliders as $sliderData) {
-            Slider::create($sliderData);
+            Slider::updateOrCreate(
+                ['sequence' => $sliderData['sequence']],
+                $sliderData
+            );
         }
 
         $this->command->info('Sliders seeded successfully! Total: ' . count($sliders));

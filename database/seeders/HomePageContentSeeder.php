@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\HomeScreenSection;
+use App\Models\Category;
+use App\Models\PopularCategory;
 use Illuminate\Database\Seeder;
 
 class HomePageContentSeeder extends Seeder
@@ -65,6 +67,26 @@ class HomePageContentSeeder extends Seeder
                 ['is_active' => true, 'sequence' => $sequence++, 'content' => $content]
             );
         }
+
+        $popularSlugs = [
+            'vehicles',
+            'real-estate',
+            'mobile-phones-tablets',
+            'electronics-home-appliances',
+            'home-furniture',
+            'fashion-beauty',
+            'jobs-careers',
+        ];
+
+        foreach ($popularSlugs as $sequence => $slug) {
+            $categoryId = Category::where('slug', $slug)->value('id');
+            if ($categoryId) {
+                PopularCategory::updateOrCreate(
+                    ['category_id' => $categoryId],
+                    ['sequence' => $sequence + 1]
+                );
+            }
+        }
     }
 
     private function categories(string $locale): array
@@ -80,6 +102,6 @@ class HomePageContentSeeder extends Seeder
     {
         $names = $locale === 'ar' ? ['الجيزة', 'طنطا', 'المنصورة', 'الإسكندرية', 'القاهرة', 'أسيوط'] : ['Giza', 'Tanta', 'Mansoura', 'Alexandria', 'Cairo', 'Assiut'];
         $queries = ['Giza', 'Tanta', 'Mansoura', 'Alexandria', 'Cairo', 'Assiut'];
-        return array_map(fn ($name, $query) => ['name' => $name, 'query' => $query, 'image' => '/assets/city_' . strtolower($query) . '.png'], $names, $queries);
+        return array_map(fn ($name, $query) => ['name' => $name, 'query' => $query, 'image' => '/assets/city_' . strtolower($query) . '.jpg'], $names, $queries);
     }
 }

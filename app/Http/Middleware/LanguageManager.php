@@ -52,6 +52,21 @@ class LanguageManager
             // If DB connection fails (Access Denied), we catch it here.
             // The app will continue using the default $locale defined above.
         }
+
+        // Admin registration is an English-only screen. Keep it independent
+        // from the public website's default language and any previous session.
+        if ($request->routeIs('register')) {
+            $locale = 'en';
+            Session::put('locale', 'en');
+            Session::put('is_rtl', false);
+
+            if (\Illuminate\Support\Facades\Schema::hasTable('languages')) {
+                $english = Language::where('code', 'en')->first();
+                if ($english) {
+                    Session::put('language', $english);
+                }
+            }
+        }
     
         if (!is_string($locale) || !preg_match('/^[a-zA-Z0-9_-]{2,10}$/', $locale)) {
             $locale = config('app.fallback_locale', 'en');

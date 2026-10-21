@@ -3,18 +3,14 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use App\Models\FeaturedItems;
 use App\Models\Item;
 use App\Models\ItemImages;
 use App\Models\Language;
 use App\Models\SeoDetail;
 use App\Models\Translation;
 use App\Models\User;
-use App\Services\HelperService;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ItemDataSeeder extends Seeder
@@ -86,19 +82,9 @@ class ItemDataSeeder extends Seeder
             ]
         );
 
-        // 3. Clear existing items and related tables safely
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        ItemImages::truncate();
-        FeaturedItems::truncate();
-        DB::table('item_offers')->truncate();
-        DB::table('item_custom_field_values')->truncate();
-        DB::table('favourites')->truncate();
-        Translation::where('translatable_type', Item::class)->delete();
-        SeoDetail::where('seoable_type', Item::class)->delete();
-        Item::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        // 4. Listing Data (2 items per category = 20 items)
+        // 3. Listing Data (2 items per category = 20 items).
+        // Records use stable slugs below, so this seeder can be run repeatedly
+        // without deleting advertisements created from the dashboard.
         $listings = [
             // -------------------------------------------------------------
             // Category 1: Vehicles & Cars (1)
@@ -598,13 +584,10 @@ class ItemDataSeeder extends Seeder
             }
             $allCategoryIdsStr = implode(',', $chainIds);
 
-            // Generate slug
-            $slug = HelperService::generateUniqueSlug(new Item(), $data['slug_base']);
-
-            $item = new Item();
+            $item = Item::firstOrNew(['slug' => $data['slug_base']]);
             $item->forceFill([
                 'name' => $data['name_en'],
-                'slug' => $slug,
+                'slug' => $data['slug_base'],
                 'description' => $data['desc_en'],
                 'category_id' => $category->id,
                 'all_category_ids' => $allCategoryIdsStr,
@@ -628,30 +611,25 @@ class ItemDataSeeder extends Seeder
                 'published_at' => Carbon::now()->subHours(rand(1, 72)),
                 'clicks' => rand(35, 480),
                 'is_dummy' => 0,
-                'created_at' => Carbon::now()->subHours(rand(1, 72)),
                 'updated_at' => Carbon::now(),
             ]);
+            if (!$item->exists) {
+                $item->created_at = Carbon::now()->subHours(rand(1, 72));
+            }
             $item->save();
 
-            // Insert Primary Image
-            ItemImages::create([
-                'item_id' => $item->id,
-                'image' => $data['image'],
-                'is_default' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
+            ItemImages::updateOrCreate(
+                ['item_id' => $item->id, 'image' => $data['image']],
+                ['is_default' => 1]
+            );
 
             // Insert Additional Gallery Images
             if (!empty($data['gallery'])) {
                 foreach ($data['gallery'] as $galleryImg) {
-                    ItemImages::create([
-                        'item_id' => $item->id,
-                        'image' => $galleryImg,
-                        'is_default' => 0,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
+                    ItemImages::updateOrCreate(
+                        ['item_id' => $item->id, 'image' => $galleryImg],
+                        ['is_default' => 0]
+                    );
                 }
             }
 

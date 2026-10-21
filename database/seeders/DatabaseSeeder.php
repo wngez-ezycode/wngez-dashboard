@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             InstallationSeeder::class,
             SystemUpgradeSeeder::class,
             ArabicLanguageSeeder::class,
+            LocationDataSeeder::class,
             CategoryDataSeeder::class,
+            ItemDataSeeder::class,
             SliderDataSeeder::class,
             HomePageContentSeeder::class,
         ]);
