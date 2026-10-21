@@ -69,7 +69,7 @@ Route::get('/', static function () {
     }
 
     return view('auth.login');
-});
+})->name('admin.login');
 
 Route::get('page/privacy-policy', function (Request $request) {
     $langId = $request->query('lang', 1); // default to English (id=1)

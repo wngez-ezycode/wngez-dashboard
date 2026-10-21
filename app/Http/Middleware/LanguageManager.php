@@ -53,9 +53,22 @@ class LanguageManager
             // The app will continue using the default $locale defined above.
         }
 
-        // Admin registration is an English-only screen. Keep it independent
-        // from the public website's default language and any previous session.
-        if ($request->routeIs('register')) {
+        // Admin auth screens are English-only. They must never inherit the
+        // public marketplace's default language (which is `ar` on production)
+        // nor a stale session locale, otherwise the login screen renders
+        // half-translated: keys present in ar.json come out Arabic while the
+        // keys missing from it fall back to English.
+        $adminAuthScreens = [
+            'login',
+            'admin.login',
+            'admin.forgot-password',
+            'register',
+            'password.request',
+            'password.email',
+            'password.reset',
+        ];
+
+        if ($request->routeIs($adminAuthScreens)) {
             $locale = 'en';
             Session::put('locale', 'en');
             Session::put('is_rtl', false);

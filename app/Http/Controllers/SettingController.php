@@ -379,6 +379,14 @@ class SettingController extends Controller
             foreach (array_keys($inputs) as $settingKey) {
                 CachingService::clearSettingsCache($settingKey);
             }
+
+            // LanguageManager caches `default_language` forever; without this the
+            // admin login screen keeps the previous language after a change.
+            Cache::forget('global_default_language');
+            if ($request->filled('default_language')) {
+                session()->put('locale', $request->input('default_language'));
+            }
+
             ResponseService::successResponse('Settings Updated Successfully');
         } catch (Throwable $th) {
             ResponseService::logErrorResponse($th, 'Setting Controller -> store');
