@@ -16,7 +16,6 @@ use App\Http\Controllers\GeminiAIController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeScreenSectionController;
 use App\Http\Controllers\ImageResizeController;
-use App\Http\Controllers\InstallerController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotificationController;
@@ -178,11 +177,6 @@ Route::match(['GET', 'POST'], 'response/plugin-payment/failed/{paymentTransactio
 /* Non-Authenticated Common Functions */
 Route::group(['prefix' => 'common'], static function () {
     Route::get('/js/lang', [Controller::class, 'readLanguageFile'])->name('common.language.read');
-});
-Route::group(['prefix' => 'install'], static function () {
-    Route::get('purchase-code', [InstallerController::class, 'purchaseCodeIndex'])->name('install.purchase-code.index');
-    Route::post('purchase-code', [InstallerController::class, 'checkPurchaseCode'])->name('install.purchase-code.post');
-    Route::get('php-function', [InstallerController::class, 'phpFunctionIndex'])->name('install.php-function.index');
 });
 
 Route::group(['middleware' => ['auth', 'language']], static function () {
