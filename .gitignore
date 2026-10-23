@@ -8,7 +8,9 @@ bootstrap/compiled.php
 app/storage/
 
 # Laravel 5 & Lumen specific
-public/storage
+# public/storage is tracked on purpose: it is a RELATIVE symlink
+# (../storage/app/public) so a deploy creates it without needing `exec()`,
+# which is disabled on shared hosting and breaks `artisan storage:link`.
 public/hot
 
 # Laravel 5 & Lumen specific with changed public path

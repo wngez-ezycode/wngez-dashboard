@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27df823ad0a623df8931a10efd69616a",
+    "content-hash": "49f80ea41b8ccbcf6d2745db9f0aef85",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -589,131 +589,6 @@
                 }
             ],
             "time": "2026-06-07T11:47:49+00:00"
-        },
-        {
-            "name": "dacoto/laravel-env-set",
-            "version": "2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dacoto/laravel-env-set.git",
-                "reference": "b3c867d109c6c2635f15d9f78a75a6313accf10f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dacoto/laravel-env-set/zipball/b3c867d109c6c2635f15d9f78a75a6313accf10f",
-                "reference": "b3c867d109c6c2635f15d9f78a75a6313accf10f",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^11.0 | ^12.0 | ^13.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^9.0 | ^10.0 | ^11.0",
-                "phpunit/phpunit": "^10.4 | ^11.5 | ^12.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "EnvSet": "dacoto\\EnvSet\\Facades\\EnvSet"
-                    },
-                    "providers": [
-                        "dacoto\\EnvSet\\EnvSetServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "dacoto\\EnvSet\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "David Cortés",
-                    "email": "cortestoledanodavid@gmail.com"
-                }
-            ],
-            "description": "A .env editor for Laravel",
-            "homepage": "https://dacoto.github.io/laravel-env-set/",
-            "support": {
-                "issues": "https://github.com/dacoto/laravel-env-set/issues",
-                "source": "https://github.com/dacoto/laravel-env-set/tree/2.2.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/dacoto97",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-03-01T05:53:10+00:00"
-        },
-        {
-            "name": "dacoto/laravel-wizard-installer",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dacoto/laravel-wizard-installer.git",
-                "reference": "e20b8c7cfbbe9b382b0d193aa3a43c5824d180c5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dacoto/laravel-wizard-installer/zipball/e20b8c7cfbbe9b382b0d193aa3a43c5824d180c5",
-                "reference": "e20b8c7cfbbe9b382b0d193aa3a43c5824d180c5",
-                "shasum": ""
-            },
-            "require": {
-                "dacoto/laravel-env-set": "^2.0",
-                "ext-pdo": "*",
-                "illuminate/support": "^12.0|^13.0",
-                "php": "^8.3"
-            },
-            "require-dev": {
-                "nunomaduro/larastan": "^3.0",
-                "orchestra/testbench": "^10.0|^11.0",
-                "pestphp/pest": "^4.0",
-                "pestphp/pest-plugin-laravel": "^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "dacoto\\LaravelWizardInstaller\\LaravelWizardInstallerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "dacoto\\LaravelWizardInstaller\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "David Cortés",
-                    "email": "dacoto@dacoto.com"
-                }
-            ],
-            "description": "Laravel wizard installer package",
-            "homepage": "https://dacoto.github.io/laravel-wizard-installer/",
-            "support": {
-                "issues": "https://github.com/dacoto/laravel-wizard-installer/issues",
-                "source": "https://github.com/dacoto/laravel-wizard-installer/tree/2.1.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/dacoto97",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-03-01T14:51:18+00:00"
         },
         {
             "name": "dedoc/scramble",
@@ -10495,43 +10370,6 @@
             "time": "2026-04-26T05:33:54+00:00"
         },
         {
-            "name": "wrteam/license-manager",
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:wrteamDimple/license-manager.git",
-                "reference": "5ba84d2d971f4afbe0766c408f9c802c193b41df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wrteamDimple/license-manager/zipball/5ba84d2d971f4afbe0766c408f9c802c193b41df",
-                "reference": "5ba84d2d971f4afbe0766c408f9c802c193b41df",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
-                "php": ">=8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "WRTeam\\LicenseManager\\LicenseManagerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "WRTeam\\LicenseManager\\": "src/"
-                }
-            },
-            "support": {
-                "source": "https://github.com/wrteamDimple/license-manager/tree/v1.4.0",
-                "issues": "https://github.com/wrteamDimple/license-manager/issues"
-            },
-            "time": "2026-04-17T11:23:02+00:00"
-        },
-        {
             "name": "zircote/swagger-php",
             "version": "4.11.1",
             "source": {
@@ -13144,5 +12982,5 @@
         "ext-zip": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
