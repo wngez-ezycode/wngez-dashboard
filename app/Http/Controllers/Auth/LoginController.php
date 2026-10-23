@@ -74,20 +74,23 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        // Prefer app default language stored in settings so admin sees default on login
-        // $defaultLanguage = \DB::table('settings')->where('name', 'default_language')->value('value');
-        $defaultLanguage = Setting::where('name', 'default_language')->value('value');
-        if ($defaultLanguage) {
-            // $language = \App\Models\Language::where('code', $defaultLanguage)->first();
-            $language = Language::where('code', $defaultLanguage)->first();
+        // The dashboard has its own default language (app.admin_locale, env
+        // ADMIN_LOCALE), so an English dashboard does not force the public
+        // marketplace/mobile app away from the `default_language` setting.
+        // The language switcher still overrides it for the current session.
+        $adminLocale = config('app.admin_locale', 'en');
+
+        $acceptedLocale = $adminLocale ?: Setting::where('name', 'default_language')->value('value');
+        if ($acceptedLocale) {
+            $language = Language::where('code', $acceptedLocale)->first();
             if ($language) {
                 \Session::put('locale', $language->code);
                 \Session::put('language', (object) $language->toArray());
                 app()->setLocale($language->code);
                 \Session::save();
             } else {
-                \Session::put('locale', $defaultLanguage);
-                app()->setLocale($defaultLanguage);
+                \Session::put('locale', $acceptedLocale);
+                app()->setLocale($acceptedLocale);
                 \Session::save();
             }
         }

@@ -91,6 +91,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Dashboard Locale
+    |--------------------------------------------------------------------------
+    |
+    | Language of the admin panel (login screen and the panel right after a
+    | login). Deliberately separate from the `default_language` setting, which
+    | drives the public marketplace and the mobile app — those can stay Arabic
+    | while the dashboard is English. Change it with ADMIN_LOCALE in .env.
+    |
+    */
+
+    'admin_locale' => env('ADMIN_LOCALE', 'en'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |

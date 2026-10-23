@@ -53,9 +53,9 @@ class LanguageManager
             // The app will continue using the default $locale defined above.
         }
 
-        // Admin auth screens are English-only. They must never inherit the
-        // public marketplace's default language (which is `ar` on production)
-        // nor a stale session locale, otherwise the login screen renders
+        // Admin auth screens use the dashboard language (app.admin_locale,
+        // env ADMIN_LOCALE) and never the public marketplace's default nor a
+        // stale session locale — otherwise the login screen renders
         // half-translated: keys present in ar.json come out Arabic while the
         // keys missing from it fall back to English.
         $adminAuthScreens = [
@@ -69,14 +69,15 @@ class LanguageManager
         ];
 
         if ($request->routeIs($adminAuthScreens)) {
-            $locale = 'en';
-            Session::put('locale', 'en');
+            $adminLocale = config('app.admin_locale', 'en');
+            $locale = $adminLocale;
+            Session::put('locale', $adminLocale);
             Session::put('is_rtl', false);
 
             if (\Illuminate\Support\Facades\Schema::hasTable('languages')) {
-                $english = Language::where('code', 'en')->first();
-                if ($english) {
-                    Session::put('language', $english);
+                $adminLanguage = Language::where('code', $adminLocale)->first();
+                if ($adminLanguage) {
+                    Session::put('language', $adminLanguage);
                 }
             }
         }
