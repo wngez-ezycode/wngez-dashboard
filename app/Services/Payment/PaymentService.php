@@ -32,7 +32,7 @@ class PaymentService
             'paystack' => new PaystackPayment($payment->currency_code),
             'razorpay' => new RazorpayPayment($payment->secret_key, $payment->api_key, $payment->currency_code),
             'phonepe' => new PhonePePayment($payment->secret_key, $payment->api_key, $payment->additional_data_1, $payment->additional_data_2, $payment->payment_mode),
-            'flutterwave' => new FlutterWavePayment($payment->secret_key, $payment->api_key, $payment->webhook_secret_key, $payment->currency_code),
+            'flutterwave' => new FlutterwavePayment($payment->secret_key, $payment->api_key, $payment->webhook_secret_key, $payment->currency_code),
             'paypal' => new PayPalPayment($payment->api_key, $payment->secret_key, $payment->currency_code, $payment->payment_mode),
             'paytabs' => new PayTabsPayment(
                 $payment->secret_key,
